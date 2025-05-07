@@ -1,0 +1,7 @@
+.text-danger {
+    font-size: 8px;
+}
+
+.back-button {
+    color: var(--primary);
+}

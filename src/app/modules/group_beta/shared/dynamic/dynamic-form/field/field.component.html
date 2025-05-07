@@ -1,0 +1,454 @@
+<div [formGroup]="form" *ngIf="!show">
+
+  <h6
+    [attr.for]="field.key"
+    class="card-title"
+    *ngIf="field.showLabel"
+    [hidden]="field.type == 'hidden' || field.type == 'inputWLabel'"
+  >
+    {{ field.label | customFormat | translate }}
+  </h6>
+  <h6 *ngIf="field.type =='inputWLabel'">
+    {{ form.controls["type"].value | customFormat | translate }}
+ </h6>
+  <div class="input-group mb-3" [ngSwitch]="field.type">
+    <input
+      class="form-control"
+      *ngIf="field.key != 'File' && field.type == 'text'"
+      [formControlName]="field.key"
+      [id]="field.key"
+      [type]="field.type"
+      [readonly]="field.readonly"
+      [pattern]="field.pattern"
+      [required]="field.required"
+    />
+    <div
+      class="error"
+      *ngIf="
+        form.controls[field.key].errors && form.controls[field.key]?.touched
+      "
+    >
+      <div *ngIf="form.controls[field.key].errors?.['required']">
+        {{ field.label | customFormat | translate }} es requerido.
+      </div>
+      <div *ngIf="form.controls[field.key].errors?.['pattern']">
+        Formato de {{ field.label | customFormat | translate }} inválido. {{ field.msj }}
+      </div>
+    </div>
+    <input
+      class="form-control"
+      *ngSwitchCase="'number'"
+      [formControlName]="field.key"
+      [id]="field.key"
+      [type]="field.type"
+      [readonly]="field.readonly"
+      [value]="field.value"
+    />
+    <input
+      class="form-control"
+      *ngSwitchCase="'time'"
+      [formControlName]="field.key"
+      [id]="field.key"
+      [type]="field.type"
+      [readonly]="field.readonly"
+      [value]="field.value"
+    />
+
+    <div class="input-group" *ngSwitchCase="'password'">
+      <input
+        type="{{ showPassword ? 'text' : 'password' }}"
+        class="form-control"
+        [formControlName]="field.key"
+        autocomplete="new-password"
+        [id]="field.key"
+        [readonly]="field.readonly"
+        [value]="field.value"
+      />
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary eyeheight"
+          type="button"
+          (click)="togglePasswordVisibility()"
+        >
+          <i
+            class="fa"
+            [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+          ></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- <input class="form-control" *ngSwitchCase="'sub'" [formControlName]="field.key" [id]="field.key" [type]="'text'" [readonly]="field.readonly" [value]="field.value" (click)="action(field.key, field.url)"> -->
+
+    <!-- <div class="input-container" *ngSwitchCase="'sub'" (click)="action(userId, field.url)">
+      <div class="avatar">
+        <img [src]="imgPerfil(avatar)" alt="Avatar">
+      </div>
+      <input class="form-control" [formControlName]="field.key" [id]="field.key" [type]="'text'" class="input-field" [readonly]="field.readonly"  [value]="field.value" >
+      <div class="arrow-icon" >
+        <i class="fa fa-arrow-right"></i>
+      </div>
+    </div> -->
+
+    <input
+      class="form-control"
+      *ngSwitchCase="'bool'"
+      [formControlName]="field.key"
+      [id]="field.key"
+      [type]="'text'"
+      [readonly]="field.readonly"
+    />
+    <textarea
+      class="form-control"
+      *ngSwitchCase="'textarea'"
+      [formControlName]="field.key"
+      [id]="field.key"
+      [readonly]="field.readonly"
+      [value]="field.value"
+      [rows]="rowLength"
+    ></textarea>
+
+    <span class="form-check form-switch" *ngSwitchCase="'bools'">
+      <input
+        *ngIf="field.value !== '0'"
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        [formControlName]="field.key"
+        id="flexSwitchCheckChecked"
+        [checked]="field.value"
+        [disabled]="field.readonly"
+        [value]="field.value"
+      />
+      <input
+        *ngIf="field.value === '0'"
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        [formControlName]="field.key"
+        id="flexSwitchCheckChecked"
+        [disabled]="field.readonly"
+        [value]="field.value"
+      />
+    </span>
+
+    <input
+      class="form-control"
+      *ngIf="File != '1' && field.type == 'File'"
+      [type]="'file'"
+      accept="application/pdf"
+      (change)="getFile($any($event).target.files)"
+      [readonly]="field.readonly"
+    />
+
+    <input
+      class="form-control"
+      *ngIf="File != '1' && field.type == 'File'"
+      [formControlName]="field.key"
+      name="field.key"
+      [id]="field.key"
+      [type]="'hidden'"
+    />
+
+    <span
+      class="form-check form-switch"
+      *ngIf="!field.readonly && field.type == 'Estado'"
+    >
+      <input
+        *ngIf="field.value !== '0'"
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        [id]="field.key"
+        [formControlName]="field.key"
+        checked
+        [disabled]="field.readonly"
+      />
+      <input
+        *ngIf="field.value === '0'"
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        [id]="field.key"
+        [formControlName]="field.key"
+        [disabled]="field.readonly"
+      />
+    </span>
+
+    <input
+      class="form-control"
+      *ngIf="field.readonly && field.type == 'Estado'"
+      [(ngModel)]="defaultValueEstado"
+      [value]="field.value"
+      [formControlName]="field.key"
+      [id]="field.key"
+      [type]="'text'"
+      [readonly]="field.readonly"
+    />
+
+    <span *ngIf="File != '0' && field.type == 'File'">
+      <a href="javascript:void(0)" (click)="downloadPdf()"
+        ><span>Descargar Pdf Adjunto </span></a
+      >
+      <input
+        class="form-control"
+        [formControlName]="field.key"
+        [id]="field.key"
+        [type]="'hidden'"
+        [value]="field.value"
+      />
+    </span>
+
+    <ng-select
+      [id]="field.key"
+      *ngSwitchCase="'select'"
+      [formControlName]="field.key"
+      [virtualScroll]="true"
+      [searchable]="false"
+      [readonly]="field.readonly"
+    >
+      <ng-option *ngFor="let opt of field.options" [value]="opt.key">{{
+        opt.value | customFormat | translate
+      }}</ng-option>
+    </ng-select>
+
+
+    <ng-select
+      [id]="field.key"
+      *ngSwitchCase="'selectWLabel'"
+      [formControlName]="field.key"
+      [virtualScroll]="true"
+      [searchable]="false"
+      [readonly]="field.readonly"
+    >
+      <ng-option *ngFor="let opt of field.options" [value]="opt.key">{{
+        opt.value | customFormat | translate
+      }}</ng-option>
+    </ng-select>
+
+
+    <input
+      class="form-control"
+      *ngSwitchCase="'inputWLabel'"
+      [formControlName]="field.key"
+      [id]="field.key"
+      [type]="field.type"
+      [readonly]="field.readonly"
+      [value]="field.value"
+    />
+
+    <div class="input-date" *ngIf="!field.readonly && field.type == 'date'">
+      <mat-form-field *ngIf="header" class="date_header">
+        <div>
+          <input
+            matInput
+            class="date_header_input"
+            [matDatepicker]="picker"
+            [formControlName]="field.key"
+            [id]="field.key"
+            readonly
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            class="date_header_matSuffix"
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker
+            #picker
+            style="float: left !important"
+          ></mat-datepicker>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!header" class="date_form">
+        <div>
+          <input
+            matInput
+            class="date_form_input"
+            [matDatepicker]="picker"
+            [formControlName]="field.key"
+            [id]="field.key"
+            readonly
+          />
+          <mat-datepicker-toggle
+            class="date_form_matSuffix"
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker
+            #picker
+            style="float: left !important"
+          ></mat-datepicker>
+        </div>
+      </mat-form-field>
+    </div>
+
+    <div class="input-date" *ngIf="!field.readonly && field.type == 'dateMin'">
+      <mat-form-field class="date_header">
+        <input
+          matInput
+          class="date_form_input"
+          [matDatepicker]="pickerInicio"
+          [formControlName]="field.key"
+          [id]="field.key"
+          readonly
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerInicio"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #pickerInicio></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="input-date" *ngIf="!field.readonly && field.type == 'dateMax'">
+      <mat-form-field class="date_header">
+        <input
+          matInput
+          class="date_form_input"
+          [matDatepicker]="pickerFin"
+          [formControlName]="field.key"
+          [min]="form.controls['validFrom'].value"
+          readonly
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerFin"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #pickerFin></mat-datepicker>
+        <mat-error
+          *ngIf="
+            form.controls['validFrom'].value > form.controls['validTo'].value
+          "
+        >
+          La fecha de fin no puede ser mayor a la fecha de inicio.
+        </mat-error>
+      </mat-form-field>
+      <h6>Días de validez</h6>
+    </div>
+
+    <input
+      class="form-control"
+      *ngIf="field.readonly && field.type == 'date'"
+      [value]="field.value"
+      [formControlName]="field.key"
+      [id]="field.key"
+      [type]="'text'"
+      [readonly]="field.readonly"
+    />
+
+  </div>
+</div>
+<!-- show -->
+<div *ngIf="show">
+  <div class="row" [hidden]="field.type == 'hidden'">
+    <div class="line-bottom" *ngIf="field.key === 'sourceUser'">Origen</div>
+    <div class="line-bottom" *ngIf="field.key === 'targetUser'">Destino</div>
+    <div
+      class="col-md-6"
+      [hidden]="
+        form.value[field.key] == null ||
+        field.type == 'title' ||
+        field.type == 'subtitle'
+      "
+    >
+      <div>{{ field.label | customFormat | translate }}</div>
+    </div>
+
+    <div
+      class="col-md-6"
+      *ngIf="
+        field.type !== 'object' &&
+        field.type !== 'time' &&
+        field.type !== 'price' &&
+        field.key !== 'ticket'
+      "
+    >
+      <div [ngClass]="field.type">
+        {{ form.value[field.key] | customFormat | translate }}
+      </div>
+    </div>
+
+    <div class="col-md-6" *ngIf="field.type == 'time'">
+      <div [ngClass]="field.type">
+        {{ toDate(form.value[field.key]) | customFormat | translate }}
+      </div>
+    </div>
+    <div class="col-md-6" *ngIf="field.type == 'price'">
+      <div [ngClass]="field.type">
+        $
+        {{
+           form.value[field.key]  !== 0 ? (form.value[field.key] | customFormat | translate | number : "1.2-2") : '0'
+        }}
+      </div>
+    </div>
+
+    <div
+      class="col-md-6"
+      *ngIf="
+        field.type === 'object' &&
+        form.value[field.key]?.name &&
+        field.key !== 'sourceIdentity' &&
+        field.key !== 'targetIdentity'
+      "
+    >
+      <!-- <div [ngClass]="field.type">{{form.value[field.key] | json}}</div> -->
+      <!-- <img [src]="form.value[field.key].image" alt="Imagen"> -->
+      <ul class="list-group">
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+          (click)="navigateTo('/usuario-detalle', form.value[field.key]?.id)"
+        >
+          <div class="d-flex align-items-center">
+            <div class="avatar mr-3">
+              <img
+                class="fondoAvatar"
+                [src]="
+                  form.value[field.key]?.image ||
+                  '../../../../assets/img/item-avatar.png'
+                "
+                style="object-fit: cover"
+              />
+            </div>
+            <div class="name">
+              {{ form.value[field.key]?.name | customFormat | translate }}
+            </div>
+          </div>
+          <i class="fas fa-chevron-right"></i>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6" *ngIf="field.key == 'ticket'">
+      <pre >
+
+        {{
+          form.value[field.key]
+        }}
+      </pre>
+    </div>
+
+    <div
+      class="col-md-6"
+      *ngIf="field.type === 'object' && form.value[field.key]"
+    >
+      <ul
+        class="list-group"
+        *ngIf="field.key === 'sourceIdentity' || field.key === 'targetIdentity'"
+      >
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+          (click)="navigateTo('/identidad-update', form.value[field.key]?.id)"
+        >
+          <div class="d-flex align-items-center">
+            <div class="name">
+              {{ form.value[field.key]?.cuit | customFormat | translate }} -
+              {{ form.value[field.key]?.name | customFormat | translate }}
+            </div>
+          </div>
+          <i class="fas fa-chevron-right"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- sourceIdentity -->

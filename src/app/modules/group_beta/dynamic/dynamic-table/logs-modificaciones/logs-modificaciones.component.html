@@ -1,0 +1,32 @@
+<div class="navbar navbar-expand-lg bg-light">Modificaciones del registro.</div>
+<div class="table-custom" >
+
+  <div class="card"> 
+    <div class="card-body table-container" id="content"  >
+
+      <table class="table" id="table-download" style="font-size: 13px;border-color: #cfc1c1 !important;background-color: transparent;" >
+        <thead *ngIf="data.content">
+          <tr style="background-color: #a4a4a46e !important;">
+            <ng-container *ngFor="let columnHeader of data.columns">
+              <th  scope="col">{{ columnHeader.text }}   </th>
+            </ng-container>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let row of data.content; index as a">
+            <tr>
+              <ng-container *ngFor="let columnHeader of data.columns; index as b"> 
+                   <td style="background-color:{{getColor(data.content,a,columnHeader.key,row)}} " > 
+                  <span >    {{ row[columnHeader.key] }}</span>
+                </td>
+              </ng-container>
+
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

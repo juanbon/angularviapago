@@ -1,0 +1,127 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-5 col-sm-12 order-sm-last">
+        <button class="btn btn-primary back-button" (click)="goBack()">
+          <i class="fas fa-arrow-left"></i> Volver
+        </button>
+      </div>
+    </div>
+      <div class="card">
+          <div class="card-body">
+            <!-- <div class="row">
+              <div class="col-md-5 col-sm-12 order-sm-last offset-md-7">
+            <button class="btn btn-primary btn-round camara-boton" (click)="selectProfilePicture()">  
+              <i [class]="userData?.image == null ? 'fas fa-camera' : 'fas fa-trash'"></i>
+             </button>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none" #fileInput>
+        </div>
+        </div> -->
+        <form [formGroup]="myForm" >            
+            <div class="row">
+      <!-- <div class="col-md-5 col-sm-12 order-sm-last img-perfil">
+       <img [src]="imgPerfil(userData?.image)" style="object-fit: cover;">
+      
+      </div> -->
+      <div class="col-md-12 col-sm-12 order-sm-first">
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input type="text" id="name" class="form-control" formControlName="name" [value]="userData?.name" [disabled]="!isCreate">
+          <div *ngIf="myForm.get('name').invalid && myForm.get('name').touched" class="text-danger">
+            <div *ngIf="myForm.get('name').errors.required">
+              El nombre es requerido.
+            </div>
+            <div *ngIf="myForm.get('name').errors.pattern">
+              El nombre no cumple con el formato requerido.
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-6">
+            <div class="form-group">
+              <label for="status">Estado</label>
+              <select id="status" class="form-control" formControlName="status" [ngClass]="'status-' + myForm.get('status').value" [attr.disabled]="isCreate ? true : null">
+                <option *ngFor="let estado of estados" [value]="estado">{{ estado | translate }}</option>
+              </select>
+              <!-- <input type="text" id="status" class="form-control" formControlName="status" [ngClass]="'status-' + myForm.get('status').value | translate" [attr.disabled]="isCreate ? true : null"> -->
+            </div>
+          </div>
+          <div class="col-md-6 col-6">
+            <div class="form-group">
+              <label for="access">Acceso</label>
+              <select id="access" class="form-control" formControlName="access" [attr.disabled]="isCreate ? true : null">
+                <option *ngFor="let acceso of accesos" [value]="acceso">{{ acceso | translate }}</option>
+              </select>
+              <!-- <input type="text" id="access" class="form-control" formControlName="access"  [attr.disabled]="isCreate ? true : null"> -->
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label for="username">Usuario</label>
+              <input type="text" id="username" class="form-control" formControlName="username" [value]="userData?.username" [disabled]="!isCreate">
+            </div>
+            <div *ngIf="myForm.get('username').errors?.pattern" class="text-danger">
+                El usuario es inválido.
+              </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label for="password">Clave</label>
+              <div class="input-group">
+                <input type="{{ showPassword ? 'text' : 'password' }}" id="password" class="form-control" formControlName="password" autocomplete="new-password">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+                    <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="myForm.get('password').errors?.pattern" class="text-danger">
+                La clave debe tener al menos 6 caracteres, contener letras y números.
+              </div>    
+             </div>
+             </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label for="phone">Teléfono</label>
+              <input type="text" id="phone" class="form-control" formControlName="phone" [value]="userData?.phone | translate" [disabled]="!isCreate">
+              <div *ngIf="myForm.get('phone').invalid && myForm.get('phone').touched" class="text-danger">
+                <div *ngIf="myForm.get('phone').errors?.pattern">
+                  El teléfono no cumple con el formato requerido.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" class="form-control" formControlName="email" [value]="userData?.email | translate" [disabled]="!isCreate">
+              <div *ngIf="myForm.get('email').invalid && myForm.get('email').touched" class="text-danger">
+                <div *ngIf="myForm.get('email').errors?.pattern">
+                  El email no cumple con el formato requerido.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label for="notes">Notas</label>
+              <textarea id="notes" class="form-control" formControlName="notes" [value]="userData?.notes" [disabled]="!isCreate"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <button class="btn btn-secondary" (click)="goBack()">Cancelar</button>
+            <button class="btn btn-primary" style="margin-left: 10px;" (click)="postUserData()"  [disabled]="myForm.invalid">Siguiente</button>
+        </div>
+        </div>
+      </div>
+      </div>
+      </form>
+      </div>
+      </div>
+    </div>
+  
+    
+    

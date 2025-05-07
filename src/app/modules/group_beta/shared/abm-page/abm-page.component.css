@@ -1,0 +1,38 @@
+.avatar img {
+  background-color: #f25318;
+  width: 36px;
+  margin-right: 10px;
+  border-radius: 50%;
+  height: 36px;
+  object-fit: cover;
+}
+
+.back-button {
+  color: var(--primary);
+  margin-bottom: 30px;
+}
+
+.top {
+  margin-top: 60px;
+}
+
+.top-min {
+  margin-top: 20px;
+}
+
+#myModal {
+  position: fixed;
+  top: 50%;
+  left: 60%;
+  z-index: 9999999;
+  transform: translate(-50%, -50%);
+}
+
+.fixed-area {
+  padding-bottom: 10px; /* Espacio para evitar superposición con el área desplazable */
+}
+
+.scrollable-area {
+  max-height: 300px; /* Altura máxima para el área desplazable */
+  overflow-y: auto; /* Desplazamiento vertical automático cuando el contenido excede la altura máxima */
+}

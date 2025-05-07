@@ -1,0 +1,67 @@
+.position {
+  padding: 0 !important;
+  /* margin-top: 10px; */
+  /* left: 50px; */
+  /* position: absolute; */
+  z-index: 99;
+}
+
+span {
+  font-size: 14px;
+}
+
+.title {
+  margin-top: 20px;
+}
+
+.position {
+  margin-top: 60px;
+}
+
+.card {
+  margin-top: 10px;
+}
+
+.back-button {
+  color: var(--primary);
+  left: 0px;
+  padding-left: 0px;
+}
+
+.img-perfil-avatar {
+  margin-bottom: 10px;
+}
+
+.img-perfil-avatar img {
+  height: 100%;
+  border-radius: 5px;
+  max-height: 230px;
+}
+
+.fondoAvatar {
+  height: 30px;
+  width: 30px;
+  background: grey;
+  border-radius: 50%;
+}
+
+.space {
+  margin-right: 5px;
+}
+
+#myModal {
+  position: fixed;
+  top: 50%;
+  left: 60%;
+  z-index: 9999999;
+  transform: translate(-50%, -50%);
+}
+
+.fixed-area {
+  padding-bottom: 10px; /* Espacio para evitar superposición con el área desplazable */
+}
+
+.scrollable-area {
+  max-height: 300px; /* Altura máxima para el área desplazable */
+  overflow-y: auto; /* Desplazamiento vertical automático cuando el contenido excede la altura máxima */
+}

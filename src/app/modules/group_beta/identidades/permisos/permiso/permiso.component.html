@@ -1,0 +1,687 @@
+<!-- permiso-create -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 col-sm-12 order-sm-first">
+      <button class="btn btn-primary back-button" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> Volver
+      </button>
+    </div>
+  </div>
+  <div class="row top" *ngIf="namePage == 'permisos-create'">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="mr-auto">{{ config.title }}</h4>
+    </div>
+    <div class="no-padding">
+      <div *ngIf="permisoData?.id">
+        <h5 class="mr-auto">Razón social</h5>
+        <ul class="list-group">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+            (click)="gotoPage(permisoData.id)"
+          >
+            <div class="d-flex align-items-center">
+              <div class="avatar mr-3">
+                <img
+                  class="fondoAvatar"
+                  [src]="imgPerfil(permisoData?.image)"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="name">
+                {{ permisoData?.name }}
+              </div>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-light btn-transparent d-flex align-items-center"
+      data-toggle="modal"
+      data-target="#modalUser"
+    >
+      <h5 class="mr-auto">Usuario</h5>
+      <i class="fas fa-pencil-alt"></i>
+    </button>
+
+    <div class="no-padding">
+      <div *ngIf="titleData?.id">
+        <ul class="list-group">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+            (click)="gotoPage(titleData.id)"
+          >
+            <div class="d-flex align-items-center">
+              <div class="avatar mr-3">
+                <img
+                  class="fondoAvatar"
+                  [src]="imgPerfil(titleData?.image)"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="name">
+                {{ titleData?.name }}
+              </div>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="card no-margin">
+      <div class="card-body">
+        <form (ngSubmit)="enviarFormulario('post')">
+          <div class="form-group">
+            <label for="dni">DNI</label>
+            <input
+              type="number"
+              class="form-control"
+              id="userDni"
+              [(ngModel)]="permisoBody.userDni"
+              name="userDni"
+              disabled
+            />
+          </div>
+          <div class="form-group">
+            <label for="tipo">Tipo</label>
+            <select
+              class="form-control form-select"
+              id="tipo"
+              [(ngModel)]="permisoBody.type"
+              name="tipo"
+            >
+              <option
+                *ngFor="let tipo of config.fields[1].options"
+                [value]="tipo.key"
+              >
+                {{ tipo.value }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="numero1">{{ config.fields[4].key | translate }}</label>
+            <label *ngIf="isCreate" for="permisoBody.transactionLimit"
+              >: ${{ permisoBody.transactionLimit | number : "1.2-2" }}</label
+            >
+            <input
+              *ngIf="!isCreate"
+              type="number"
+              class="form-control"
+              id="permisoBody.transactionLimit"
+              [(ngModel)]="permisoBody.transactionLimit"
+              name="permisoBody.transactionLimit"
+            />
+          </div>
+          <div class="form-group">
+            <label for="permisoBody.monthLimit">{{
+              config.fields[5].key | translate
+            }}</label>
+            <label *ngIf="isCreate" for="permisoBody.monthLimit"
+              >: ${{ permisoBody.monthLimit | number : "1.2-2" }}</label
+            >
+            <input
+              *ngIf="!isCreate"
+              type="number"
+              class="form-control"
+              id="permisoBody.monthLimit"
+              [(ngModel)]="permisoBody.monthLimit"
+              name="permisoBody.monthLimit"
+            />
+          </div>
+          <!-- <div class="form-group">
+              <label for="permisoBody.status">{{config.fields[8].key | translate}}</label>
+              <input type="text" class="form-control" id="permisoBody.status" [(ngModel)]="permisoBody.status" name="permisoBody.status">
+            </div> -->
+          <div class="form-group">
+            <label for="permisoBody.notes">{{
+              config.fields[9].key | translate
+            }}</label>
+            <textarea
+              class="form-control"
+              id="permisoBody.notes"
+              rows="3"
+              [(ngModel)]="permisoBody.notes"
+              name="permisoBody.notes"
+            ></textarea>
+          </div>
+
+          <div class="container">
+            <div class="text-center">
+              <button type="submit" class="space btn btn-primary">
+                Guardar
+              </button>
+              <button type="button" class="btn btn-primary" (click)="goBack()">
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div>
+      <div
+        class="modal fade"
+        id="myModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-top" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="myModalLabel">
+                <div class="d-flex align-items-center">
+                  <span class="badge badge-pill badge-primary mr-2">{{
+                    titleData?.name
+                  }}</span>
+                  <button
+                    [hidden]="!titleData"
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="titleData = ''"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="fixed-area">
+                <app-filtro
+                  [optionGroups]="opciones"
+                  (datoProcesado)="getData($event)"
+                ></app-filtro>
+              </div>
+              <div class="scrollable-area">
+                <ul class="list-group">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    *ngFor="let titleData of items"
+                    (click)="select(titleData)"
+                  >
+                    <div class="d-flex align-items-center">
+                      <div class="avatar mr-3">
+                        <img
+                          class="fondoAvatar"
+                          [src]="imgPerfil(titleData?.image)"
+                          style="object-fit: cover"
+                        />
+                      </div>
+                      <div class="name">
+                        {{ titleData?.name }}
+                      </div>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- fin permiso create -->
+
+<!-- permiso-ver -->
+<div class="container">
+  <div class="row top" *ngIf="namePage == 'permisos-ver'">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="mr-auto">{{ config.title }} sobre CUITs</h4>
+    </div>
+    <div class="no-padding">
+      <ul class="list-group">
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+          (click)="editarPermisos(dataResult?.id)"
+        >
+          <!-- "gotoPage(permisoData.id)" -->
+
+          <div class="d-flex align-items-center">
+            <div class="avatar mr-3"></div>
+            <div class="name">
+              {{ dataResult?.name }}
+            </div>
+          </div>
+          <i class="fas fa-chevron-right"></i>
+        </li>
+      </ul>
+      <div>
+        <h5 class="mr-auto">Usuario</h5>
+        <ul class="list-group">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+            (click)="gotoPage(dataResult?.user?.id)"
+          >
+            <div class="d-flex align-items-center">
+              <div class="avatar mr-3">
+                <img
+                  class="fondoAvatar"
+                  [src]="imgPerfil(dataResult?.user?.image)"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="name">
+                {{ dataResult?.user?.name }}
+              </div>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="permisoData?.id">
+        <h5 class="mr-auto">Razón social</h5>
+        <ul class="list-group">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+            (click)="gotoIden(permisoData.id)"
+          >
+            <div class="d-flex align-items-center">
+              <div class="avatar mr-3">
+                <img
+                  class="fondoAvatar"
+                  [src]="imgPerfil(permisoData?.image)"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="name">
+                {{ permisoData?.name }}
+              </div>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card no-margin">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="tipo">Tipo</label>
+          <select
+            class="form-control form-select"
+            id="tipo"
+            [(ngModel)]="permisoBody.type"
+            name="tipo"
+            disabled
+          >
+            <option
+              *ngFor="let tipo of config.fields[1].options"
+              [value]="tipo.key"
+            >
+              {{ tipo.value }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="numero1">{{ config.fields[4].key | translate }}</label>
+          <label for="permisoBody.transactionLimit"
+            >: ${{ permisoBody.transactionLimit | number : "1.2-2" }}</label
+          >
+        </div>
+        <div class="form-group">
+          <label for="permisoBody.monthLimit">{{
+            config.fields[5].key | translate
+          }}</label>
+          <label for="permisoBody.monthLimit"
+            >: ${{ permisoBody.monthLimit | number : "1.2-2" }}</label
+          >
+        </div>
+        <div class="form-group">
+          <label for="permisoBody.status">{{
+            config.fields[8].key | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            id="permisoBody.status"
+            [(ngModel)]="permisoBody.status"
+            name="permisoBody.status"
+            disabled
+          />
+        </div>
+
+        <div class="container"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- fin permiso create -->
+
+<!-- permisos-editar -->
+<div class="container">
+  <div class="row top" *ngIf="namePage == 'permisos-editar'">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="mr-auto">{{ config.title }}</h4>
+    </div>
+    <div class="no-padding">
+      <div *ngIf="permisoData?.id">
+        <h5 class="mr-auto">Razón social</h5>
+        <ul class="list-group">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+            (click)="gotoPage(permisoData.id)"
+          >
+            <div class="d-flex align-items-center">
+              <div class="avatar mr-3">
+                <img
+                  class="fondoAvatar"
+                  [src]="imgPerfil(permisoData?.image)"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="name">
+                {{ permisoData?.name }}
+              </div>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-light btn-transparent d-flex align-items-center"
+      data-toggle="modal"
+      data-target="#modalUser"
+    >
+      <h5 class="mr-auto">Usuario</h5>
+      <i class="fas fa-pencil-alt"></i>
+    </button>
+
+    <div class="no-padding">
+      <div *ngIf="titleData?.id">
+        <ul class="list-group">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+            (click)="gotoPage(titleData.id)"
+          >
+            <div class="d-flex align-items-center">
+              <div class="avatar mr-3">
+                <img
+                  class="fondoAvatar"
+                  [src]="imgPerfil(titleData?.image)"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="name">
+                {{ titleData?.name }}
+              </div>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="card no-margin">
+      <div class="card-body">
+        <form (ngSubmit)="enviarFormulario('update')">
+          <!-- <div class="form-group">
+            <label for="dni">DNI</label>
+            <input
+              type="number"
+              class="form-control"
+              id="userDni"
+              [(ngModel)]="permisoBody.userDni"
+              name="userDni"
+              disabled
+            />
+          </div> -->
+          <div class="form-group">
+            <label for="tipo">Tipo</label>
+            <select
+              class="form-control form-select"
+              id="tipo"
+              [(ngModel)]="permisoBody.type"
+              name="tipo"
+            >
+              <option
+                *ngFor="let tipo of config.fields[1].options"
+                [value]="tipo.key"
+              >
+                {{ tipo.value }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="numero1">{{ config.fields[4].key | translate }}</label>
+
+            <input
+              type="number"
+              class="form-control"
+              id="permisoBody.transactionLimit"
+              [(ngModel)]="permisoBody.transactionLimit"
+              name="permisoBody.transactionLimit"
+            />
+          </div>
+          <div class="form-group">
+            <label for="permisoBody.monthLimit">{{
+              config.fields[5].key | translate
+            }}</label>
+
+            <input
+              type="number"
+              class="form-control"
+              id="permisoBody.monthLimit"
+              [(ngModel)]="permisoBody.monthLimit"
+              name="permisoBody.monthLimit"
+            />
+          </div>
+          <div class="form-group">
+            <label for="permisoBody.status">{{config.fields[8].key | translate}}</label>
+            <select class="form-control form-select" id="permisoBody.status" [(ngModel)]="permisoBody.status" name="permisoBody.status">
+              <option *ngFor="let opt of config.fields[8].options" [value]="opt.key">{{opt.value | translate}}</option>
+            </select>
+      </div>
+          <div class="form-group">
+            <label for="permisoBody.notes">{{
+              config.fields[9].key | translate
+            }}</label>
+            <textarea
+              class="form-control"
+              id="permisoBody.notes"
+              rows="3"
+              [(ngModel)]="permisoBody.notes"
+              name="permisoBody.notes"
+            ></textarea>
+          </div>
+
+          <div class="container">
+            <div class="text-center">
+              <button type="submit" class="space btn btn-primary">
+                Guardar
+              </button>
+              <button type="button" class="btn btn-primary" (click)="goBack()">
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div>
+      <div
+        class="modal fade"
+        id="myModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-top" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="myModalLabel">
+                <div class="d-flex align-items-center">
+                  <span class="badge badge-pill badge-primary mr-2">{{
+                    titleData?.name
+                  }}</span>
+                  <button
+                    [hidden]="!titleData"
+                    type="button"
+                    class="close"
+                    aria-label="Close"
+                    (click)="titleData = ''"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="fixed-area">
+                <app-filtro
+                  [optionGroups]="opciones"
+                  (datoProcesado)="getData($event)"
+                ></app-filtro>
+              </div>
+              <div class="scrollable-area">
+                <ul class="list-group">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    *ngFor="let titleData of items"
+                    (click)="select(titleData)"
+                  >
+                    <div class="d-flex align-items-center">
+                      <div class="avatar mr-3">
+                        <img
+                          class="fondoAvatar"
+                          [src]="imgPerfil(titleData?.image)"
+                          style="object-fit: cover"
+                        />
+                      </div>
+                      <div class="name">
+                        {{ titleData?.name }}
+                      </div>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- fin permisoseditar -->
+<div>
+  <div
+    class="modal fade"
+    id="modalUser"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalUserLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-top" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalUserLabel">
+            <div class="d-flex align-items-center">
+              <span class="badge badge-pill badge-primary mr-2">{{
+                titleData?.name
+              }}</span>
+              <button
+                [hidden]="!titleData"
+                type="button"
+                class="close"
+                aria-label="Close"
+                (click)="borrarSearch()"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="fixed-area">
+            <app-filtro
+              [optionGroups]="opciones"
+              (datoProcesado)="getDatosDNI($event)"
+            ></app-filtro>
+          </div>
+          <div class="scrollable-area" *ngIf="userItem">
+            <ul class="list-group">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+                (click)="select(userItem)"
+              >
+                <div class="d-flex align-items-center">
+                  <div class="avatar mr-3">
+                    <img
+                      class="fondoAvatar"
+                      [src]="imgPerfil(userItem?.image)"
+                      style="object-fit: cover"
+                    />
+                  </div>
+                  <div class="name">
+                    {{ userItem?.name }}
+                  </div>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

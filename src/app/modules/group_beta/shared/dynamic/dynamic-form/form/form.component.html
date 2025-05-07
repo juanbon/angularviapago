@@ -1,0 +1,27 @@
+<!--<div class="spinner" *ngIf="spinner">
+    <img src="./../../../../assets/img/loader.svg" alt="Cargando">
+  </div>-->
+<div class="card" *ngIf="!spinner">
+    <div class="card-body">
+        <form [formGroup]="form">
+            <div >
+                <div class="row">
+                    <div *ngFor="let field of fields" class="col-xs-12 col-md-12 col-lg-12">
+                        <div *ngIf="form.value[field.key] != null" class="form-row content-left">
+                            <app-field [field]="field" [form]="form" [show]="!edit"></app-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="form-row group-actions" *ngIf="!spinner">
+
+    <button (click)="onSubmit()" class="btn btn-primary rounded-pill buttom-cstm button-font-style accept"
+        [disabled]="!form.valid" *ngIf="edit">Guardar</button>
+        <button class="btn btn-danger rounded-pill buttom-cstm button-font-style cancel"
+        *ngIf="edit || namePage == 'identidad-create'" (click)="closeDialog()">Cancelar</button>
+
+</div>
+

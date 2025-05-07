@@ -1,0 +1,428 @@
+<div *ngIf="datoUsuario">
+<div class="container" *ngIf="namePage !== 'cerrar-sesion'">
+  <div class="row">
+    <div class="col-md-12 col-sm-12 order-sm-first">
+      <button class="btn btn-primary back-button" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> Volver
+      </button>
+    </div>
+  </div>
+  <div *ngIf="namePage == 'mi-cuenta'">
+    <div class="row position">
+      <!-- <div class="no-padding">
+      <h5 class="mr-auto">Razón social</h5>
+
+    </div> -->
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-md-5 col-sm-12 order-sm-last img-perfil text-center">
+            <div class="position-relative">
+              <img
+                [src]="imgPerfil(datoUsuario?.image)"
+                style="object-fit: cover"
+              />
+              <div
+                class="position-absolute bottom-0 start-50 translate-middle-x"
+              >
+                <button
+                  class="btn btn-primary btn-round camara-boton"
+                  (click)="selectProfilePicture()"
+                >
+                  <i
+                    [class]="
+                      datoUsuario?.image == null
+                        ? 'fas fa-camera'
+                        : 'fas fa-trash'
+                    "
+                  ></i>
+                </button>
+                <input
+                  type="file"
+                  (change)="onFileSelected($event)"
+                  accept="image/*"
+                  style="display: none"
+                  #fileInput
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-7 col-sm-12 order-sm-last">
+            <ul class="list-group">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+                (click)="gotoPage('nombre')"
+              >
+                <div class="d-flex align-items-center">
+                  <div class="avatar mr-3">Nombre:</div>
+                  <div class="name">{{ datoUsuario?.name }}</div>
+                </div>
+                <i class="fas fa-pencil-alt"></i>
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+                (click)="gotoPage('telefono')"
+              >
+                <div class="d-flex align-items-center">
+                  <div class="avatar mr-3">Teléfono:</div>
+                  <div class="name">{{ datoUsuario?.phone }}</div>
+                </div>
+                <i class="fas fa-pencil-alt"></i>
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+                (click)="gotoPage('email')"
+              >
+                <div class="d-flex align-items-center">
+                  <div class="avatar mr-3">E-mail:</div>
+                  <div class="name">{{ datoUsuario?.email }}</div>
+                </div>
+                <i class="fas fa-pencil-alt"></i>
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+                (click)="gotoPage('username')"
+              >
+                <div class="d-flex align-items-center">
+                  <div class="avatar mr-3">Usuario:</div>
+                  <div class="name">{{ datoUsuario?.username }}</div>
+                </div>
+                <i class="fas fa-pencil-alt"></i>
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+                (click)="gotoPage('clave')"
+              >
+                <div class="d-flex align-items-center">
+                  <div class="avatar mr-3">Clave:</div>
+                  <div class="name">Cambiar mi clave</div>
+                </div>
+                <i class="fas fa-pencil-alt"></i>
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+                (click)="gotoPage('cerrar-sesion')"
+              >
+                <div class="d-flex align-items-center">
+                  <div class="avatar mr-3">Cerrar sesión</div>
+                  <div class="name"></div>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modificar -->
+
+<div *ngIf="namePage !== 'mi-cuenta'">
+  <div class="row position">
+    <!-- <div class="no-padding">
+      <h5 class="mr-auto">Razón social</h5>
+
+    </div> -->
+  </div>
+  <div class="card">
+    <div class="card-body">
+
+      <form #myForm="ngForm" (ngSubmit)="submitForm()">
+        <div class="col-md-12 col-12">
+          <div class="form-group" *ngIf="namePage == 'nombre'">
+            <label for="nombre">Nombre</label>
+            <input
+              type="text"
+              id="nombre"
+              class="form-control"
+              required
+              [(ngModel)]="userData.name"
+              name="nombre"
+              #nombreInput="ngModel"
+              pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"
+            />
+               <div
+        *ngIf="nombreInput.invalid && (nombreInput.dirty || nombreInput.touched)"
+        class="text-danger"
+      >
+        <div *ngIf="nombreInput.errors?.['required']">El nombre es requerido.</div>
+        <div *ngIf="nombreInput.errors?.['pattern']">
+          El nombre debe contener solo letras y espacios.
+        </div>
+      </div>
+          </div>
+
+          <div class="form-group" *ngIf="namePage == 'telefono'">
+            <label for="phone">Teléfono</label>
+            <input
+              type="number"
+              id="phone"
+              class="form-control"
+              required
+              [(ngModel)]="userData.phone"
+              name="phone"
+              #nombreInput="ngModel"
+              pattern="[0-9]+"
+              />
+               <div
+        *ngIf="nombreInput.invalid && (nombreInput.dirty || nombreInput.touched)"
+        class="text-danger"
+      >
+        <div *ngIf="nombreInput.errors?.['required']">El teléfono es requerido.</div>
+        <div *ngIf="nombreInput.errors?.['pattern']">
+          El teléfono es inválido.
+        </div>
+
+          </div>
+      </div>
+          <div class="form-group" *ngIf="namePage == 'email'">
+            <label for="email">E-mail</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              required
+              [(ngModel)]="userData.email"
+              name="email"
+              #nombreInput="ngModel"
+              pattern="^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+            />
+               <div
+        *ngIf="nombreInput.invalid && (nombreInput.dirty || nombreInput.touched)"
+        class="text-danger"
+      >
+        <div *ngIf="nombreInput.errors?.['required']">El email es requerido.</div>
+        <div *ngIf="nombreInput.errors?.['pattern']">
+          El email es inválido.
+        </div>
+      </div>
+          </div>
+
+          <div class="form-group" *ngIf="namePage == 'username'">
+            <label for="username">Usuario</label>
+            <input
+              type="text"
+              id="username"
+              class="form-control"
+              required
+              [(ngModel)]="userData.username"
+              name="username"
+              #nombreInput="ngModel"
+              pattern="^.{6,}$"
+            />
+               <div
+        *ngIf="nombreInput.invalid && (nombreInput.dirty || nombreInput.touched)"
+        class="text-danger"
+      >
+        <div *ngIf="nombreInput.errors?.['required']">El nombre es requerido.</div>
+        <div *ngIf="nombreInput.errors?.['pattern']">
+          El usuario es inválido</div>
+      </div>
+          </div>
+
+          <div class="form-group" *ngIf="namePage !== 'clave' && namePage !== 'cerrar-sesion'">
+            <label for="password">Clave actual</label>
+            <div class="input-group">
+              <input
+                type="{{ showPassword ? 'text' : 'password' }}"
+                id="password"
+                class="form-control"
+                [(ngModel)]="userData.verifyPassword"
+                [ngModelOptions]="{standalone: true}"
+                 autocomplete="new-password"
+                 #passInput="ngModel"
+                 required
+                 pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
+                 />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  (click)="togglePasswordVisibility()"
+                >
+                  <i
+                    class="fa"
+                    [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+                  ></i>
+                </button>
+              </div>
+            </div>
+            <div class="text-danger" *ngIf="passInput.invalid && (passInput.dirty || passInput.touched)">
+              <div *ngIf="passInput.errors?.['required']">La contraseña es requerido.</div>
+              <div *ngIf="passInput.errors?.['pattern']">
+                La clave debe tener al menos 6 caracteres, contener letras y números</div>
+            </div>
+          </div>
+        </div>
+        <div class="container" *ngIf="namePage !== 'clave' && namePage !== 'cerrar-sesion'">
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary space"  [disabled]="myForm.invalid">Guardar</button>
+
+            <button class="btn btn-primary" (click)="volver()">Cancelar</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- <div class="row">
+        <div class="col-md-12 col-12">
+          <div class="form-group" *ngIf="namePage == 'nombre'">
+            <label for="status">Nombre</label>
+            <input
+              type="text"
+              id="nombre"
+              class="form-control"
+              [value]="datoUsuario?.name"
+              required
+              [(ngModel)]="nombreValue"
+              #nombreInput="ngModel"
+              name="nombre"
+            />
+
+            <div
+              *ngIf="
+                nombreInput.invalid &&
+                (nombreInput.dirty || nombreInput.touched)
+              "
+              class="text-danger"
+            >
+              El nombre es requerido.
+            </div>
+          </div>
+          <div class="form-group" *ngIf="namePage == 'telefono'">
+            <label for="status">Teléfono</label>
+            <input
+              type="number"
+              id="telefono"
+              class="form-control"
+              [value]="datoUsuario?.telefono"
+
+
+            />
+          </div>
+          <div class="form-group" *ngIf="namePage == 'email'">
+            <label for="status">E-mail</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              [value]="datoUsuario?.email"
+            />
+          </div>
+          <div class="form-group" *ngIf="namePage == 'username'">
+            <label for="status">Usuario</label>
+            <input
+              type="text"
+              id="username"
+              class="form-control"
+              [value]="datoUsuario?.username"
+            />
+          </div>
+        </div>
+      </div> -->
+      <!-- <div class="col-md-12 col-12 no-padding">
+        <div class="form-group">
+          <label for="password">Clave actual</label>
+          <div class="input-group">
+            <input
+              type="{{ showPassword ? 'text' : 'password' }}"
+              id="password"
+              class="form-control"
+              [formControl]="myInput"
+              autocomplete="new-password"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                (click)="togglePasswordVisibility()"
+              >
+                <i
+                  class="fa"
+                  [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+                ></i>
+              </button>
+            </div>
+          </div>
+          <div class="text-danger" *ngIf="myInput.invalid && myInput.touched">
+            La clave debe tener al menos 6 caracteres, contener letras y
+            números.
+          </div>
+        </div>
+      </div> -->
+      <!-- cambio pass -->
+      <div class="form" *ngIf="namePage == 'clave'">
+        <form [formGroup]="restoreForm" (ngSubmit)="onSubmitRestore()">
+          <div class="form-group buttom-ing">
+            <label for="password">Nueva contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <div class="alert alert-danger" role="alert" *ngIf="restoreForm.get('password')?.['errors'] && restoreForm.get('password')?.['touched']">
+              <div *ngIf="restoreForm.get('password')?.errors?.['required']">
+                {{ validationMessages.password.required }}
+              </div>
+              <div *ngIf="restoreForm.get('password')?.errors?.['pattern']">
+                {{ validationMessages.password.pattern }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group buttom-ing">
+            <label for="verifyPassword">Repetir nueva contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="verifyPassword"
+              required
+            />
+          </div>
+
+
+          <div class="form-group">
+            <div class="alert alert-danger" role="alert" *ngIf="restoreForm.get('verifyPassword')?.['errors'] && restoreForm.get('verifyPassword')?.['touched']">
+              <div *ngIf="restoreForm.get('verifyPassword')?.errors?.['required']">
+                {{ validationMessages.verifyPassword.required }}
+              </div>
+              <div *ngIf="restoreForm.get('verifyPassword')?.errors?.['pattern']">
+                {{ validationMessages.verifyPassword.pattern }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="alert alert-danger" role="alert" *ngIf="restoreFailed">
+              Las contraseñas son diferentes
+            </div>
+          </div>
+
+
+          <div class="container">
+            <div class="text-center">
+              <button type="submit" class="space btn btn-primary" [disabled]="restoreForm.invalid">Restaurar</button>
+              <button class="btn btn-primary" (click)="volver()">Cancelar</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <!-- fin cambio pass -->
+    </div>
+  </div>
+
+  <div class="container text-center" *ngIf="namePage == 'cerrar-sesion'">
+    <h2>¿Seguro que quieres cerrar sesión?</h2>
+    <button class="space btn btn-primary" (click)="logout()">Aceptar</button>
+    <button  class="btn btn-primary" (click)="volver()">Cancelar</button>
+  </div>
+
+
+</div>
+</div>

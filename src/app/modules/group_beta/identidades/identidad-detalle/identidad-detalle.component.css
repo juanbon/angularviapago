@@ -1,0 +1,36 @@
+.img-perfil {
+  margin-bottom: 10px;
+}
+
+.img-perfil img {
+  height: 100%;
+  border-radius: 5px;
+  max-height: 230px;
+}
+
+.fondoAvatar {
+  height: 30px;
+  width: 30px;
+  background: grey;
+  border-radius: 50%;
+}
+
+.position {
+  margin-top: 60px;
+}
+
+.card {
+  margin-top: 10px;
+}
+
+.back-button {
+  color: var(--primary);
+}
+
+.space {
+  margin-right: 5px;
+}
+
+.camara-boton {
+  top: 230px;
+}

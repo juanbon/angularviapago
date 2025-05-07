@@ -1,0 +1,67 @@
+<form>
+  <div class="search-container">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      name="searchTerm"
+      [placeholder]="searchPlaceholder"
+      class="search-input"
+      (keyup)="onSubmit()"
+    />
+    <span
+    class="search-icon"
+    aria-hidden="true"
+    (click)="clearSearch()"
+    *ngIf="searchTerm"
+  >
+    <i class="fas fa-times"></i>
+  </span>
+    <!-- <span class="search-icon" aria-hidden="true">
+    </span> -->
+    <div class="dropdown">
+      <button
+        class="btn"
+        type="button"
+        id="dropdownMenuButton"
+        (click)="toggleDropdown()"
+        [attr.aria-expanded]="dropdownOpen ? 'true' : 'false'"
+      >
+        <i class="fas fa-ellipsis-v"></i>
+      </button>
+      <div
+        class="card card-drop shadow"
+        *ngIf="dropdownOpen"
+        (click)="onDropdownClick($event)"
+      >
+        <button class="btn-order" (click)="toggleOrder()">
+          <span
+            class="fas"
+            [ngClass]="{
+              'fa-sort-amount-up': ascendingOrder,
+              'fa-sort-amount-down-alt': !ascendingOrder
+            }"
+          ></span>
+        </button>
+        <div *ngFor="let group of optionGroups; let i = index">
+          <mat-form-field (click)="onDropdownClick($event)">
+            <mat-label>{{ group.property.es }}</mat-label>
+            <mat-select
+              [(value)]="group.value"
+              (selectionChange)="onOptionChange(i, group.value)"
+            >
+              <mat-option
+                *ngFor="let option of group?.match; let in = index"
+                [value]="option.label.en"
+              >
+                {{ option.label.es }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <button class="btn-clear-filters" (click)="clearFilters()">
+          Limpiar filtros
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

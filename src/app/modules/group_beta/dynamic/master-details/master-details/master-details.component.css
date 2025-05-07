@@ -1,0 +1,67 @@
+.card {
+    border-radius: 10px;
+    height: fit-content;
+}
+
+.card-body {
+    padding: 0px !important;
+    border-radius: 5px;
+}
+
+.table {
+    margin-bottom: 0px !important;
+    border-radius: 5px;
+}
+
+table {
+    table-layout: fixed;
+}
+
+thead {
+    background-color: #F9F9F9 !important;
+}
+
+.table thead th {
+    font-weight: 500 !important;
+    border-bottom: 2px solid #EDEEF5 !important;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+tr {
+    vertical-align: middle;
+    font-size: 14px !important;
+    font-weight: 500;
+}
+
+.table-container {
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.tables-container {
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top: 1%;
+    display: flex;
+    flex-direction: row;
+}
+
+.button-simple {
+    height: 31px !important;
+    width: 31px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: #fff !important;
+    font-size: 18px;
+    border: none;
+    text-align: center;
+}
+
+.card2 {
+    margin-left: 15px;
+}
+
+.card1 {
+    margin-right: 15px;
+}

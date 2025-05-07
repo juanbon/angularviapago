@@ -1,0 +1,39 @@
+<!-- <div class="container">
+  <div class="row justify-content-start">
+    <div class="col-md-3">
+      <h4>Usuarios</h4>
+    </div>
+    <div class="col-md-9 text-right">
+      <button class="btn btn-primary rounded-circle" [routerLink]="['/usuario-create']">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+  </div>
+  
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <app-filtro 
+          [searchPlaceholder]="searchPlaceholder"
+          [optionGroups]="opciones"
+          (datoProcesado)="getData($event)"
+        ></app-filtro>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-6" *ngFor="let item of items">
+        <app-card
+          [avatar]="item?.image"
+          [title]="item?.name"
+          [description]="item.email || item.phone || item.username || item.status"
+          [text]="item.status === 'pending' ? 'Pendiente' : (item.status === 'enable' ? '' : item.status)"
+          (click)="navigate(item.id)"
+          ></app-card>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-4" *ngIf="showLoadMoreButton">
+      <div class="col-md-2 text-center">
+        <button class="btn btn-primary" (click)="loadMoreItems()">Ver más</button>
+      </div>
+    </div>
+  </div>
+   -->

@@ -1,0 +1,117 @@
+.card-body {
+    padding: 0px !important;
+    border-radius: 5px;
+}
+
+.table {
+    margin-bottom: 0px !important;
+    border-radius: 5px;
+}
+
+table {
+    table-layout: fixed;
+}
+
+thead {
+    background-color: #a4a4a46e !important;
+}
+
+.table thead th {
+    font-weight: bold !important;
+    border-bottom: 2px solid #EDEEF5 !important;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+.table tbody td {
+    font-weight: 500 !important;
+    border: 2px solid #cfd0d7 !important;
+    padding: 0px 10px 0px 10px;
+    vertical-align: middle;
+    overflow-x: hidden;
+}
+
+.table td.acciones {
+    text-align: center;
+}
+
+.table th.acciones {
+    width: 204px !important;
+}
+
+.buttom-cstm {
+    width: 50px;
+    height: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.table-custom {
+    width: 100%;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.edit-buttom {
+    color: #008376 !important;
+    border-color: #008376 !important;
+}
+
+tr {
+    vertical-align: middle;
+    font-size: 12px !important;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.table-container {
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.forms {
+    margin-bottom: 2%;
+}
+
+.pagination {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    justify-content: flex-end;
+}
+
+.pages {
+    color: black;
+    font-weight: 500;
+    margin-right: 30px;
+}
+
+.input-page {
+    width: 90px;
+    margin-right: 30px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/*SPINNER*/
+#content .spinner {
+    width: 200px;
+    margin: auto;
+}

@@ -1,0 +1,470 @@
+<div class="container" *ngIf="userData$ | async as userData">
+  <div>
+    <div class="col-md-12 col-sm-12 order-sm-first">
+      <button class="btn btn-primary back-button" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> Volver
+      </button>
+    </div>
+    <div class="row position">
+      <div class="col-md-6 col-sm-12 order-md-first text-left">
+        <h4 class="text-left">Comercio</h4>
+      </div>
+      <div class="col-md-6 col-sm-12 order-md-last text-right">
+        <button class="btn btn-primary edit-button" (click)="goToUserDetail()">
+          <i class="fas fa-pencil-alt"></i>
+        </button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-5 col-sm-12 order-sm-last offset-md-7">
+            <button
+              class="btn btn-primary btn-round camara-boton"
+              (click)="selectProfilePicture()"
+            >
+              <i
+                [class]="
+                  userData?.image == null ? 'fas fa-camera' : 'fas fa-trash'
+                "
+              ></i>
+            </button>
+            <input
+              type="file"
+              (change)="onFileSelected($event)"
+              accept="image/*"
+              style="display: none"
+              #fileInput
+            />
+          </div>
+        </div>
+        <form>
+          <div class="row">
+            <div class="col-md-5 col-sm-12 order-sm-first order-md-last img-perfil">
+              <img
+                [src]="imgPerfil(userData?.image)"
+                style="object-fit: cover"
+              />
+            </div>
+            <div class="col-md-7 col-sm-12 order-sm-first">
+              <div class="form-group">
+                <label for="name">Nombre</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  [value]="userData?.name"
+                  disabled
+                />
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-6">
+                  <div class="form-group">
+                    <label for="status">Estado</label>
+                    <input
+                      type="text"
+                      id="status"
+                      class="form-control"
+                      [value]="userData?.status | translate"
+                      disabled
+                      [ngClass]="'status-' + userData?.status"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 col-6"></div>
+                <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label for="phone">Teléfono</label>
+                    <input
+                      type="text"
+                      id="phone"
+                      class="form-control"
+                      [value]="userData?.phone | translate"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      class="form-control"
+                      [value]="userData?.email | translate"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label for="web">Sitio Web</label>
+                    <input
+                      type="url"
+                      id="web"
+                      class="form-control"
+                      [value]="userData?.link1 | translate"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label for="ig">Instagram</label>
+                    <input
+                      type="text"
+                      id="ig"
+                      class="form-control"
+                      [value]="userData?.link2 | translate"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label for="facebook">Facebook</label>
+                    <input
+                      type="text"
+                      id="facebook"
+                      class="form-control"
+                      [value]="userData?.link3 | translate"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 col-12">
+                  <div class="form-group">
+                    <label for="tw">Twitter</label>
+                    <input
+                      type="text"
+                      id="tw"
+                      class="form-control"
+                      [value]="userData?.link4 | translate"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="notes">Notas</label>
+                    <textarea
+                      id="notes"
+                      class="form-control"
+                      [value]="userData?.notes"
+                      disabled
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <button
+              type="button"
+              class="btn btn-light btn-transparent d-flex align-items-center"
+              data-toggle="modal"
+              data-target="#myModal"
+              (click)="tipoModal('razonSocial', userData.userIdentity)"
+            >
+              <h5 class="mr-auto">Razón Social</h5>
+              <i class="fas fa-pencil-alt"></i>
+            </button>
+
+            <div class="no-padding">
+              <div>
+                <ul class="list-group">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    (click)="gotoPage('identidad-detalle', userData.userIdentity.id)"
+                  >
+                    <div class="d-flex align-items-center">
+                      <div class="avatar mr-3">
+                        <img
+                          class="fondoAvatar"
+                          [src]="imgAvatar(userData?.userIdentity.image)"
+                          style="object-fit: cover"
+                        />
+                      </div>
+                      <div class="name">
+                        {{ userData?.userIdentity.name }}
+                      </div>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <button
+              type="button"
+              class="btn btn-light btn-transparent d-flex align-items-center"
+              data-toggle="modal"
+              data-target="#myModal"
+              (click)="tipoModal('categorias', userData?.categories)"
+            >
+              <h5 class="mr-auto">Categorías</h5>
+              <i class="fas fa-pencil-alt"></i>
+            </button>
+
+            <div class="no-padding">
+              <div>
+                <ul class="list-group">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    *ngFor="let categorie of userData?.categories"
+                    (click)="gotoPage('categorias', categorie.id)"
+                  >
+                    <div class="d-flex align-items-center">
+                      <div class="avatar mr-3">
+                        <img
+                          class="fondoAvatar"
+                          [src]="imgAvatar(categorie?.image)"
+                          style="object-fit: cover"
+                        />
+                      </div>
+                      <div class="name">
+                        {{ categorie?.name }}
+                      </div>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                  </li>
+                  <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                  *ngIf="
+                    userData?.categories.length == 0
+                  "
+                >
+                  No se definieron categorias
+                </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div
+              class="col-6"
+            >
+              <h5 class="d-flex align-items-center justify-content-between">
+                Sucursales
+                <i class="fas fa-plus" (click)="gotoPage('sucursal-create', {id: userData?.id, name: userData?.name, image: userData?.image})"></i>
+
+              </h5>
+              <ul class="list-group">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                  *ngIf="
+                    userData?.branches.length == 0
+                  "
+                >
+                  No se definieron sucursales
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                  *ngFor="
+                    let branch of userData?.branches
+                  "
+                  (click)="gotoPage('sucursal-detalle', branch.id)"
+                >
+                  {{ branch?.name }}
+                  <i class="fas fa-chevron-right"></i>
+                </li>
+              </ul>
+            </div>
+                <div
+                  class="col-6"
+                >
+                  <h5 class="d-flex align-items-center justify-content-between">
+                    Beneficios
+                    <i class="fas fa-plus" (click)="gotoPage('beneficio-create', {id: userData?.id, name: userData?.name, image: userData?.image})"></i>
+                  </h5>
+                  <ul class="list-group">
+                    <li
+                      class="list-group-item d-flex justify-content-between align-items-center"
+                      *ngIf="
+                        userData?.benefits.length == 0
+                      "
+                    >
+                      No se definieron beneficios
+                    </li>
+                    <li
+                      class="list-group-item d-flex justify-content-between align-items-center"
+                      *ngFor="let benefit of userData?.benefits"
+                      (click)="gotoPage('beneficio-detalle', benefit.id)"
+                    >
+                      {{ benefit.name }}
+                      <i class="fas fa-chevron-right"></i>
+                    </li>
+                  </ul>
+                </div>
+          </div>
+          <div class="row">
+            <button
+              type="button"
+              class="btn btn-light btn-transparent d-flex align-items-center"
+              data-toggle="modal"
+              data-target="#myModal"
+              (click)="tipoModal('propietarios', userData.user)"
+            >
+              <h5 class="mr-auto">Propietarios</h5>
+              <i class="fas fa-pencil-alt"></i>
+            </button>
+
+            <div class="no-padding">
+              <div>
+                <ul class="list-group">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    (click)="gotoPage('usuario-detalle', userData.user.id)"
+                  >
+                    <div class="d-flex align-items-center">
+                      <div class="avatar mr-3">
+                        <img
+                          class="fondoAvatar"
+                          [src]="imgAvatar(userData?.user.image)"
+                          style="object-fit: cover"
+                        />
+                      </div>
+                      <div class="name">
+                        {{ userData?.user.name }}
+                      </div>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal RS -->
+  <div
+    class="modal fade"
+    #myModal
+    id="myModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-top" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="myModalLabel">
+            <div
+              *ngIf="tModal !== 'categorias'; else categoriasItem"
+              class="d-flex align-items-center"
+            >
+              <span class="badge badge-pill badge-primary mr-2">
+                {{ titleData?.name || userData?.user.name }}
+              </span>
+              <button
+                [hidden]="!titleData"
+                type="button"
+                class="close"
+                aria-label="Close"
+                (click)="titleData = ''"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <ng-template #categoriasItem >
+                <div *ngIf="titleData.length != 0">
+              <div 
+              class="d-flex align-items-center" 
+              *ngFor="let item of titleData; let i = index">
+                <span class="badge badge-pill badge-primary mr-2">
+                  {{ item?.name }}
+                </span>
+                <button
+                  [hidden]="!titleData"
+                  type="button"
+                  class="close"
+                  aria-label="Close"
+                  (click)="delete(i)"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+            </ng-template>
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            (click)="cerrarModal()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="fixed-area">
+            <app-filtro
+              [optionGroups]="opciones"
+              (datoProcesado)="getData($event)"
+              [searchPlaceholder]="placeholder"
+            ></app-filtro>
+          </div>
+          <div class="scrollable-area">
+            <ul class="list-group">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+                *ngFor="let categoItem of items"
+                (click)="select(categoItem)"
+              >
+                <div class="d-flex align-items-center">
+                  <div class="avatar mr-3">
+                    <img
+                      class="fondoAvatar"
+                      [src]="imgAvatar(categoItem?.image)"
+                      style="object-fit: cover"
+                    />
+                  </div>
+                  <div class="name">
+                    {{ categoItem?.name }}
+                  </div>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+              </li>
+              <div
+                class="row justify-content-center mt-4"
+                *ngIf="showLoadMoreButton"
+              >
+                <div class="col-md-2 text-center">
+                  <button class="btn btn-primary" (click)="loadMoreItems()">
+                    Ver más
+                  </button>
+                </div>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+            (click)="cerrarModal()"
+          >
+            Cerrar
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-dismiss="modal"
+            (click)="guardarCambios(titleData)"
+          >
+            Guardar cambios
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- fin modal RS -->
+</div>

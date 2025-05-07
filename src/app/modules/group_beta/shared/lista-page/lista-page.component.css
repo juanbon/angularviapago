@@ -1,0 +1,15 @@
+.title {
+  text-transform: capitalize;
+}
+
+.style-text {
+  font-size: 10px;
+}
+
+.back-button {
+  color: var(--primary);
+  margin-bottom: 30px;
+}
+.top {
+  margin-top: 60px;
+}

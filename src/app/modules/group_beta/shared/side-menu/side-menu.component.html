@@ -1,0 +1,98 @@
+<div *ngIf="isOpen" class="side-menu-dos container-fixed" [class.active]="isOpen" [ngClass]="{'full-width': isMobile(), 'desktop-width': !isMobile()}">
+  <ul>
+    <ng-container *ngFor="let menuItem of menuItems">
+      <ng-container *ngIf="menuItem.type === 'item'; else dropdownTemplate">
+        <!-- Tipo "item" -->
+        <li
+          
+          (click)="toggleMenuIsMobile()"
+        >
+          <div class="nav-link item-link"
+            [routerLink]="menuItem.url"
+            routerLinkActive="actives"
+          >
+            <i class="bi bi-dot pr-2 dot-style" aria-hidden="true"></i>
+            {{ menuItem.menu }}
+          </div>
+        </li>
+      </ng-container>
+      <ng-template #dropdownTemplate>
+        <!-- Tipo "dropdown" -->
+        <li class="dropdown-submenu nav-link"
+          
+          (click)="toggleMenuIsMobile()"
+          routerLinkActive="actives"
+        >
+          <a class="dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <div class="nav-link item-link"
+              [routerLink]="menuItem.url"
+              routerLinkActive="actives"
+            >
+              <i class="bi bi-play-fill pr-2"></i>
+              <span class="nav-label">{{ menuItem.menu }}</span>
+            </div>
+          </a>
+          <ul class="dropdown-menu">
+            <ng-container *ngFor="let subItem of menuItem.subitems">
+              <ng-container *ngIf="subItem.type === 'item'; else subDropdownTemplate">
+                <!-- Subitem "item" -->
+                <li
+                  *ngIf="checkPrivilege(subItem.privileges, privilege)"
+                  (click)="toggleMenuIsMobile()"
+                >
+                  <div class="nav-link item-link"
+                    [routerLink]="subItem.url"
+                    routerLinkActive="actives"
+                  >
+                    <i class="bi bi-dot pr-2 dot-style" aria-hidden="true"></i>
+                    {{ subItem.menu }}
+                  </div>
+                </li>
+              </ng-container>
+              <ng-template #subDropdownTemplate>
+                <!-- Subitem "dropdown" -->
+                <li class="dropdown-submenu"
+                  *ngIf="checkPrivilege(subItem.privileges, privilege)"
+                  (click)="toggleMenuIsMobile()"
+                >
+                  <a class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <div class="nav-link item-link">
+                      <i class="bi bi-play-fill pr-2"></i>
+                      <span class="nav-label">{{ subItem.menu }}</span>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <ng-container *ngFor="let subSubItem of subItem.subitems">
+                      <li
+                        *ngIf="checkPrivilege(subItem.privileges, privilege)"
+                        (click)="toggleMenuIsMobile()"
+                      >
+                        <div class="nav-link item-link"
+                          [routerLink]="subSubItem.url"
+                          routerLinkActive="actives"
+                        >
+                          <i class="bi bi-dot pr-2 dot-style" aria-hidden="true"></i>
+                          {{ subSubItem.menu }}
+                        </div>
+                      </li>
+                    </ng-container>
+                  </ul>
+                </li>
+              </ng-template>
+            </ng-container>
+          </ul>
+        </li>
+      </ng-template>
+    </ng-container>
+  </ul>
+</div>

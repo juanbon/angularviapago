@@ -1,0 +1,47 @@
+.errorMessage{
+    color:red;
+}
+.select {
+    position: relative;
+    display: inline-block;
+    width: 120px;
+    height: 32px;
+}
+
+.select::before {
+    background-color: #5678EF;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    content: 'Seleccionar';
+    position: absolute;
+    left: 10px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 50rem!important;
+}
+
+.select #imageload {
+    opacity: 0;
+    display: inline-block;
+}
+
+
+#imageload::before {
+    content: 'Seleccionar Archivo';
+}
+.typeTransaction{
+    width: 250px;
+}
+.ng-valid:has(.required){
+    color:red;
+}
+.ng-valid:has(.required) h6::after {
+    content: " *";
+  }
+
+
+
+

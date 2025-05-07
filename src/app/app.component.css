@@ -1,0 +1,304 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+.container {
+    height: 100vh;
+    /* margin: 0px; */
+    margin-top: 95pxa;
+    padding: 0px;
+}
+
+.nav-item {
+  padding-left: 15px;
+}
+
+.custom-nav {
+    background-color: #FFFFFF;
+    height: 60px;
+}
+
+.nav-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
+}
+
+.dropdown-menu {
+  min-width: 120px;
+}
+
+.multiple {
+  min-width: 200px;
+}
+
+.dot-style {
+  font-size: 1.5rem;
+}
+
+.item-link {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.dropdown-submenu {
+  position: relative;
+  min-width: 50px;
+}
+
+.dropdown-submenu > .dropdown-menu {
+  min-width: 220px;
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: 1px;
+  -webkit-border-radius: 0 6px 6px 6px;
+  -moz-border-radius: 0 6px 6px;
+  border-radius: 6px 6px 6px 6px;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropdown-submenu > a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #ccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+
+.dropdown-submenu:hover > a:after {
+  border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+  float: none;
+}
+
+.dropdown-submenu.pull-left > .dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  -webkit-border-radius: 6px 0 6px 6px;
+  -moz-border-radius: 6px 0 6px 6px;
+  border-radius: 6px 0 6px 6px;
+}
+
+li {
+  cursor: pointer;
+}
+
+/*DASHBOARD*/
+
+.dashboard {
+  padding-right: 25%;
+  padding-left: 25%;
+  padding-top: 1%;
+  height: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.dashboard img {
+  width: 30px;
+  margin: 20px;
+}
+
+.dashboard .columns {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard .card {
+  width: 250px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.dashboard a {
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  height: 30%;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.dashboard .border-custom {
+  border-bottom-width: 6px !important;
+  border-style: solid !important;
+  border-bottom-left-radius: 4px !important;
+  border-bottom-right-radius: 4px !important;
+}
+
+.dashboard .one-border {
+  border-bottom-color: red !important;
+}
+
+.dashboard .two-border {
+  border-bottom-color: #008375 !important;
+}
+
+.dashboard .three-border {
+  border-bottom-color: #222222 !important;
+}
+
+.dashboard .four-border {
+  border-bottom-color: #ffa700 !important;
+}
+
+.dashboard .five-border {
+  border-bottom-color: #b4bd00 !important;
+}
+
+.dashboard .six-border {
+  border-bottom-color: #8b8c8e !important;
+}
+
+.dashboard .seven-border {
+  border-bottom-color: #6a41bd !important;
+}
+
+.dashboard .eight-border {
+  border-bottom-color: #53b3e8 !important;
+}
+
+.dashboard .nine-border {
+  border-bottom-color: #0663ee !important;
+}
+
+.dashboard .ten-border {
+  border-bottom-color: #d83aab !important;
+}
+
+.dashboard .eleven-border {
+  border-bottom-color: #3dc64b !important;
+}
+
+.dashboard .twelve-border {
+  border-bottom-color: #dd9292 !important;
+}
+
+.container {
+  /* display: flex; */
+  height: 100vh;
+  margin-top: 70px;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+/* .side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 300px;
+    margin-top: 56px;
+} */
+
+  .main-content {
+    margin-left: 300px;
+    padding-top: 15px;
+  }
+
+  .closeSideMenu {
+    margin-left: auto;
+    padding-top: 15px;
+  }
+
+.action-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-left: auto;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+.action-button img {
+  height: 20px;
+}
+
+.action-button:hover {
+  height: 40px;
+  width: 40px;
+  background-color: #f25318;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* CSS por ID */
+#appVersion {
+  position: fixed;
+  top: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #80a847;
+  padding-left: 40px;
+}
+
+/* Add the following media queries at the end of your CSS */
+
+/* For small screens */
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+    margin-top: 100px;
+  }
+
+  .dashboard .card {
+    margin: 10px auto;
+  }
+  .container {
+    margin-top: 0;
+  }
+}
+
+/* For medium screens */
+@media (min-width: 769px) and (max-width: 992px) {
+  .dashboard .columns {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  .dashboard .card {
+    margin: 10px;
+  }
+}
+
+/* For large screens */
+ @media (min-width: 993px) {
+  .dashboard .columns {
+    flex-wrap: wrap;
+  }
+
+  .dashboard .card {
+    margin: 10px;
+  }
+}
+
+/* Additional Styles */
+/* Adjust the font size for smaller screens */
+@media (max-width: 576px) {
+  .dashboard a {
+    font-size: 10px;
+  }
+}

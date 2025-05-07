@@ -1,0 +1,11 @@
+<div class="filter-container">
+    <div class="inputs" *ngFor="let field of filters">
+        {{field.label}}: <app-field [field]="field" [form]="form" [show]="false" [header]="true"></app-field>
+    </div>
+    <button type="button" class="btn btn-secondary rounded-pill buttom-cstm" (click)="onSearch()">
+        <i class="bi bi-search"></i>
+    </button>
+    <button type="button" class="buttom-cstm-clear" (click)="clear()">
+        <i class="bi bi-x-circle"></i>
+    </button>
+</div>

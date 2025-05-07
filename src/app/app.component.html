@@ -1,0 +1,82 @@
+<div [hidden]="!loadingService.isLoading" class="loadings">
+  <img src="./../../../../assets/img/loading.gif" alt="Cargando">
+</div>
+
+<div *ngIf="mostrarMenu">
+  <nav style="background-color:#f25318" class="navbar navbar-expand custom-nav" *ngIf="isLoggedIn">
+    <a class="nav-link" [routerLink]="'/'">
+      <img style="width: 55%;
+      margin-left: 33px;
+      margin-top: 13px;" src="../../../../assets/img/navbar.png" />
+    </a>
+
+    <button (click)="toggleSideMenu(isOpen)" class="action-button">
+      <img src="../assets/icons/menu-sharp.svg" />
+    </button>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="nav navbar-nav mr-auto">
+        <li>
+          <a class="nav-link" [routerLink]="'/'">
+            <i class="bi bi-house-door"></i>
+          </a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav">
+        <li class="dropdown col-md-6">
+          <span id="appVersion">{{ version }}</span>
+          <a
+            href="#"
+            class="dropdown-toggle nav-link"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="true"
+          >
+            <span class="nav-label">{{ username?.name }}</span>
+          </a>
+          <ul class="dropdown-menu col-xs-12">
+            <li>
+              <button type="button" class="btn" (click)="logout()">
+                Cerrar sesión
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<div class="container">
+  <div *ngIf="mostrarMenu">
+    <div class="side-menu" id="sideMenu">
+      <app-side-menu
+        [isOpen]="isOpen"
+        (resizeScreen)="toggleSideMenu($event)"
+      ></app-side-menu>
+    </div>
+  </div>
+  <div class="closeSideMenu">
+    <div class="dashboard" *ngIf="hasRoute('/')" >
+
+
+      <app-grafica-transacciones></app-grafica-transacciones>
+
+
+      
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

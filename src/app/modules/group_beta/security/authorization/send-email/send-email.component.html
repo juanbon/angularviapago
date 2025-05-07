@@ -1,0 +1,21 @@
+<div class="container-login">
+    <div class="img-login">
+        <img alt="Login" src="../../../../assets/img/login.png" />
+    </div>
+    <div class="form-login">
+        <div class="img-login-form">
+            <img alt="Login" src="../../../../assets/img/logo-login.png" />
+        </div>
+        <div class="form">
+            <form [formGroup]="emailForm" (ngSubmit)="onSubmitEmail()" *ngIf="!emailSend">
+                <div class="form-group buttom-ing">
+                    <label for="email">Ingrese su correo electrónico</label>
+                    <input type="email" class="form-control" formControlName="email" required>
+                </div>
+                <div class="form-group buttom-register">
+                    <button type="submit" class="btn btn-secondary btn-block rounded-pill" [disabled]="emailForm.invalid">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

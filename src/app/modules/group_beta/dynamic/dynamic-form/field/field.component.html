@@ -1,0 +1,104 @@
+<div [formGroup]="form">
+  <h6 [attr.for]="field.key" class="card-title" *ngIf="field.showLabel">{{field.label}}</h6>
+
+  <div class="input-group mb-3" [ngSwitch]="field.type">
+
+
+
+    <input [className] = "'form-control ' + field.require" *ngIf="field.key!='texto' && field.type=='text' && field.key!='image'" [formControlName]="field.key" [id]="field.key" [type]="field.type" [readonly]="field.readonly" >
+
+
+    <input class="form-control" *ngSwitchCase="'number'"  maxlength="{{field.maxlength}}" [formControlName]="field.key" [id]="field.key" [type]="field.type" [readonly]="field.readonly" [value]="field.value">
+    <input class="form-control" *ngSwitchCase="'time'" [formControlName]="field.key" [id]="field.key" [type]="field.type" [readonly]="field.readonly" [value]="field.value">
+
+    <!-- <input class="form-control" *ngSwitchCase="'bool'" [formControlName]="field.key" [id]="field.key" [type]="'text'" [readonly]="field.readonly" > -->
+
+    <span class="form-check form-switch" *ngSwitchCase="'bools'">
+      <input *ngIf="field.value !== '0'" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked [disabled]="field.readonly">
+      <input *ngIf="field.value === '0'" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" [disabled]="field.readonly">
+    </span>
+
+    <input class="form-control" *ngIf="File != '1' && field.type=='File'" [type]="'file'"  accept="application/pdf" (change)="getFilePDF($any($event).target.files)" [readonly]="field.readonly"  >
+
+    <input class="form-control"  *ngIf="File != '1' && field.type=='File'" [formControlName]="field.key" name="field.key" [id]="field.key" [type]="'hidden'" >
+
+
+    <span class="form-check form-switch" *ngIf="!field.readonly && (field.type=='Estado' || field.type=='bool')" >
+      <input *ngIf="field.value !== '0'" class="form-check-input" type="checkbox" role="switch" [id]="field.key" [formControlName]="field.key" checked [disabled]="field.readonly">
+      <input *ngIf="field.value === '0'" class="form-check-input" type="checkbox" role="switch" [id]="field.key" [formControlName]="field.key" [disabled]="field.readonly">
+    </span>
+
+
+
+   <textarea [readonly]="field.readonly" class="form-control" *ngIf="field.type=='textarea'"  [value]="field.value"  [formControlName]="field.key" [id]="field.key" >
+   </textarea>
+
+
+   <input class="form-control" *ngIf="field.readonly && field.type=='Estado'" [(ngModel)]="defaultValueEstado" [value]="field.value"  [formControlName]="field.key" [id]="field.key" [type]="'text'" [readonly]="field.readonly" >
+
+
+
+    <span *ngIf="File != '0' && field.type=='File'">
+      <a href="javascript:void(0)" (click)="downloadPdf()" ><span  >Descargar Pdf Adjunto </span></a>
+        <input class="form-control"  [formControlName]="field.key" [id]="field.key" [type]="'hidden'"  [value]="field.value">
+
+    </span>
+
+
+
+    <!-- select dependiente padre -->
+    <ng-select  [className] = "field.key + ' ' + field.require" (ngModelChange)="onParentChange($event, field)" [id]="field.key" *ngIf="field.children && field.dependence && field.type=='select'" [formControlName]="field.key" [virtualScroll]="true">
+      <ng-option *ngFor="let opt of field.options" [value]="opt.key">{{opt.value}}</ng-option>
+    </ng-select>
+
+    <!-- select dependiente hijo COMPONENTE 2 -->
+    <ng-select   [className] = "field.key + ' ' + field.require" [id]="field.key" *ngIf="!field.children && field.dependence && field.type=='select'" [formControlName]="field.key" [virtualScroll]="true">
+      <ng-option *ngFor="let opt of children" [value]="opt.key">{{opt.value}}</ng-option>
+    </ng-select>
+
+    <!-- select independiente -->
+    <ng-select  
+    [className]="field.key + ' ' + field.require" 
+    [id]="field.key" 
+    *ngIf="!field.dependence && field.type=='select'" 
+    [formControlName]="field.key" 
+    [virtualScroll]="true"
+    style="display: inline-block; vertical-align: middle;width:300px"
+  >
+    <ng-option *ngFor="let opt of field.options" [value]="opt.key">{{opt.value}}</ng-option>
+  </ng-select>
+  
+
+    <div class="input-date" *ngIf="!field.readonly && field.type=='date'"  >
+
+
+      <mat-form-field  *ngIf="header" class="date_header">
+         <div>
+        <input matInput class="date_header_input" [matDatepicker]="picker" [formControlName]="field.key"   [id]="field.key" readonly>
+        <mat-datepicker-toggle matSuffix class="date_header_matSuffix" [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker style="float:left !important"></mat-datepicker>
+      </div>
+      </mat-form-field>
+
+
+        <mat-form-field  *ngIf="!header" class="date_form">
+         <div>
+        <input matInput class="date_form_input" [matDatepicker]="picker" [formControlName]="field.key"   [id]="field.key" readonly>
+        <mat-datepicker-toggle class="date_form_matSuffix" matSuffix  [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker style="float:left !important"></mat-datepicker>
+      </div>
+      </mat-form-field>
+
+    </div>
+
+   <input class="form-control" *ngIf="field.readonly && field.type=='date'" [value]="field.value" [formControlName]="field.key" [id]="field.key" [type]="'text'" [readonly]="field.readonly" >
+
+   <span *ngIf="field.type=='image'" ><img [src]="src"/></span>
+   <div class="select" *ngIf="field.type=='image'" ><input class="form-control"  (change)="getFileUpload($any($event).target.files)" [id]="'imageload'" [type]="'file'" accept="image/jpeg" [readonly]="field.readonly" ></div>
+
+   <span *ngIf="field.type=='image130px'" ><img [src]="src2"/></span>
+   <div class="select" *ngIf="field.type=='image130px'" ><input class="form-control"  (change)="getFileUploadMultiple($any($event).target.files)" [id]="'imageload'" [type]="'file'" accept="image/jpeg" [readonly]="field.readonly" ></div>
+   <span *ngIf="field.type=='image32px'" ><img id="img32px" [src]="src1"/></span>
+  </div>
+
+</div>

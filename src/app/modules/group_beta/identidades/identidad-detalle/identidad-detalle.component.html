@@ -1,0 +1,413 @@
+<div class="container" *ngIf="userData$ | async as userData">
+  <div class="row">
+    <div class="col-md-12 col-sm-12 order-sm-first">
+      <button class="btn btn-primary back-button" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> Volver
+      </button>
+    </div>
+  </div>
+  <div class="row position">
+    <div class="col-md-6 col-sm-12 order-md-first text-left">
+      <h4 class="text-left">Razón Social</h4>
+    </div>
+    <div class="col-md-6 col-sm-12 order-md-last text-right">
+      <button
+        class="btn btn-primary text-right edit-button"
+        (click)="gotoEdit(userId)"
+      >
+        <i class="fas fa-pencil-alt"></i>
+      </button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row" *ngIf="(userData$ | async)?.type == 'business'">
+        <div class="col-md-5 col-sm-12 order-sm-last offset-md-7">
+          <button
+          class="btn btn-primary btn-round camara-boton d-inline-block"
+            (click)="selectProfilePicture()"
+          >
+            <i
+              [class]="
+                userData?.approvalFile == null ? 'fas fa-camera' : 'fas fa-trash'
+              "
+            ></i>
+          </button>
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+            style="display: none"
+            #fileInput
+          />
+        </div>
+        </div>
+      <form>
+        <div class="row">
+          <div class="col-md-5 col-sm-12 order-sm-first order-md-last img-perfil">
+            <label>Prueba fotográfica</label>
+            <div class="row" *ngIf="(userData$ | async)?.type == 'personal'">
+              <div class="col-md-12 col-sm-12 order-sm-last img-perfil">
+                <img
+                  [src]="imgPerfil((imagesData$ | async)?.verifyDniFront)"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="col-md-12 col-sm-12 order-sm-last img-perfil">
+                <img
+                  [src]="imgPerfil((imagesData$ | async)?.verifyDniBack)"
+                  style="object-fit: cover"
+                />
+              </div>
+
+              <div class="col-md-12 col-sm-12 order-sm-last img-perfil">
+                <img
+                  [src]="imgPerfil((imagesData$ | async)?.verifySelfie1)"
+                  style="object-fit: cover"
+                />
+              </div>
+
+              <div
+                *ngIf="(userData$ | async)?.approvalFile"
+                class="col-md-12 col-sm-12 order-sm-last img-perfil"
+              >
+                <img
+                  [src]="imgPerfil((userData$ | async)?.approvalFile)"
+                  style="object-fit: cover"
+                />
+              </div>
+            </div>
+
+              <div class="row" *ngIf="(userData$ | async)?.type == 'business'">
+              <div class="col-md-5 col-sm-12 order-sm-last img-perfil">
+                <img
+                  [src]="imgPerfil((userData$ | async)?.approvalFile)"
+                  style="object-fit: cover"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7 col-sm-12 order-sm-last order-md-first">
+            <div class="form-group">
+              <input
+                type="text"
+                id="name"
+                class=""
+                [value]="(userData$ | async)?.name"
+                disabled
+              />
+            </div>
+            <div *ngIf="(userData$ | async)?.userId as userId">
+              <h5>Titular</h5>
+              <ul class="list-group">
+                <li *ngIf="(userData$ | async)?.user?.name; else elseSin"
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                  (click)="gotoPage(userId)"
+                >
+                  <div class="d-flex align-items-center">
+                    <div class="avatar mr-3">
+                      <img
+                        class="fondoAvatar"
+                        [src]="imgPerfil((imagesData$ | async)?.verifySelfie1)"
+                        style="object-fit: cover"
+                      />
+                    </div>
+                    <div class="name">
+                      {{ (userData$ | async)?.user?.name }}
+                    </div>
+                  </div>
+                  <i class="fas fa-chevron-right"></i>
+                </li>
+                <ng-template #elseSin>
+                  <div class="name">
+                    No se definió el titular
+                  </div>
+                  </ng-template>
+              </ul>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label for="status">Estado</label>
+                  <input
+                    type="text"
+                    id="status"
+                    class="form-control"
+                    [value]="(userData$ | async)?.status | translate"
+                    disabled
+                    [ngClass]="'status-' + (userData$ | async)?.status"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 col-6">
+                <div class="form-group">
+                  <label for="type">Tipo</label>
+                  <input
+                    type="text"
+                    id="type"
+                    class="form-control"
+                    [value]="(userData$ | async)?.type | translate"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 col-6">
+                <div class="form-group">
+                  <label for="subtype">Subtipo</label>
+                  <input
+                    type="text"
+                    id="subtype"
+                    class="form-control"
+                    [value]="(userData$ | async)?.subtype | translate"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 col-6">
+                <div class="form-group">
+                  <label for="cuit">CUIT</label>
+                  <input
+                    type="number"
+                    id="cuit"
+                    class="form-control"
+                    [value]="(userData$ | async)?.cuit | translate"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 col-6" *ngIf="(userData$ | async)?.type == 'personal'">
+                <div class="form-group">
+                  <label for="dniNumber">DNI</label>
+                  <input
+                    type="number"
+                    id="dniNumber"
+                    class="form-control"
+                    [value]="(userData$ | async)?.dniNumber | translate"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-12">
+                <label *ngIf="(userData$ | async)?.feeExempt" color="danger">
+                </label>
+                <br />
+                <label *ngIf="(userData$ | async)?.taxExempt" color="danger">
+                </label>
+              </div>
+
+              <ng-container *ngIf="(userData$ | async)?.type == 'personal'">
+              <h5>Validación</h5>
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="pomeloId">Sesión de Pomelo</label>
+                  <input
+                    type="text"
+                    id="pomeloId"
+                    class="form-control"
+                    [value]="(userData$ | async)?.pomeloId"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 col-6">
+                <div class="form-group">
+                  <label for="verifyNumber">Intentos</label>
+                  <input
+                    type="text"
+                    id="verifyNumber"
+                    class="form-control"
+                    [value]="(userData$ | async)?.verifyNumber"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 col-6">
+                <div class="form-group">
+                  <label for="dataEnrichmentManualStatus">Enriquecimiento Manual de Datos</label>
+                  <input
+                    type="text"
+                    id="dataEnrichmentManualStatus"
+                    class="form-control"
+                    [value]="(userData$ | async)?.dataEnrichmentManualStatus"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 col-6">
+                <div class="form-group">
+                  <label for="govCheckDataStatus">Estado Verificación de Datos</label>
+                  <input
+                    type="text"
+                    id="govCheckDataStatus"
+                    class="form-control"
+                    [value]="(userData$ | async)?.govCheckDataStatus"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 col-6">
+                <div class="form-group">
+                  <label for="govCheckSelfieStatus">Estado Verificación de Selfie</label>
+                  <input
+                    type="text"
+                    id="govCheckSelfieStatus"
+                    class="form-control"
+                    [value]="(userData$ | async)?.govCheckSelfieStatus"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 col-6">
+                <div class="form-group">
+                  <label for="sessionExpiration">Expiración de sesión</label>
+                  <input
+                    type="text"
+                    id="sessionExpiration"
+                    class="form-control"
+                    [value]="(userData$ | async)?.sessionExpiration"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 col-6">
+                <div class="form-group">
+                  <label for="failedReasons">Motivos de error</label>
+                  <input
+                    type="text"
+                    id="failedReasons"
+                    class="form-control"
+                    [value]="(userData$ | async)?.failedReasons"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 col-6">
+                <div class="form-group">
+                  <label for="dniCreateDate">Fecha Creacion DNI</label>
+                  <input
+                    type="text"
+                    id="dniCreateDate"
+                    class="form-control"
+                    [value]="getFechaSinHora((userData$ | async)?.dniCreateDate)"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 col-6">
+                <div class="form-group">
+                  <label for="dniExpireDate">Fecha Vencimiento DNI</label>
+                  <input
+                    type="text"
+                    id="dniExpireDate"
+                    class="form-control"
+                    [value]="getFechaSinHora((userData$ | async)?.dniExpireDate)"
+                    disabled
+                  />
+                </div>
+              </div>
+            </ng-container>
+              <div class="row">
+                <div
+                  class="col-12"
+                  *ngIf="(userData$ | async)?.status == 'enable'"
+                >
+                  <h5>Cuentas</h5>
+                  <ul class="list-group">
+                    <li
+                      class="list-group-item d-flex justify-content-between align-items-center"
+                      *ngFor="let item of (userData$ | async)?.usersAccounts"
+                      (click)="navigateToDetail(item, 'cuenta')"
+                    >
+                      {{ item.name }}
+                      <i class="fas fa-chevron-right"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="row">
+                <div
+                  class="col-12"
+                  *ngIf="(userData$ | async)?.status == 'enable'"
+                >
+                  <h5>Tarjetas</h5>
+                  <ul class="list-group">
+                    <li
+                      class="list-group-item d-flex justify-content-between align-items-center"
+                      *ngFor="let item of (userData$ | async)?.cards"
+                      (click)="navigateToDetail(item, 'cards')"
+                    >
+                      {{ item.name }}
+                      <i class="fas fa-chevron-right"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="row">
+                <div
+                  class="col-12"
+                  *ngIf="(userData$ | async)?.status == 'enable'"
+                >
+                  <h5 class="d-flex align-items-center justify-content-between">
+                    Permisos
+                    <i
+                      class="fas fa-plus"
+                      (click)="crearPermisos(userData?.name, userData?.id)"
+                    ></i>
+                  </h5>
+                  <ul class="list-group">
+                    <li
+                      class="list-group-item d-flex justify-content-between align-items-center"
+                      *ngIf="
+                        (userData$ | async)?.usersIdentitiesGrants.length == 0
+                      "
+                    >
+                      No se definieron permisos
+                    </li>
+                    <li
+                      class="list-group-item d-flex justify-content-between align-items-center"
+                      *ngFor="
+                        let item of (userData$ | async)?.usersIdentitiesGrants
+                      "
+                      (click)="
+                        editarPermisos(item?.id, userData?.name, userData?.id)
+                      "
+                    >
+                      {{ item.name }}
+                      <i class="fas fa-chevron-right"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="(userData$ | async)?.notes">
+          <div class="col-12">
+            <h5>
+              Observaciones
+            </h5>
+            <p style="font-size: 12px; white-space: pre-line !important">
+              {{ (userData$ | async)?.notes }}
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container" *ngIf="userData?.status == 'pending'">
+    <div class="text-center">
+      <button
+        class="space btn btn-primary"
+        (click)="action(userData?.id, 'enableIdentity')"
+      >
+        Habilitar
+      </button>
+      <button
+        class="btn btn-primary"
+        (click)="action(userData?.id, 'verifyIdentity')"
+      >
+        Verificar
+      </button>
+    </div>
+  </div>
+</div>

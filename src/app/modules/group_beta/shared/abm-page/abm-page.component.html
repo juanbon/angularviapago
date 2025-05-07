@@ -1,0 +1,277 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 col-sm-12 order-sm-first">
+      <button class="btn btn-primary back-button" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> Volver
+      </button>
+    </div>
+  </div>
+  <div class="row top">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="mr-auto">{{ config.title }}</h4>
+    </div>
+    <button
+      *ngIf="
+        namePage !== 'usuario-update' &&
+        namePage !== 'usuario-create' &&
+        namePage !== 'contacto-update' &&
+        namePage !== 'permisos-create' &&
+        namePage !== 'comercio-update' &&
+        namePage !== 'beneficio-create' &&
+        namePage !== 'beneficio-update'&&
+        namePage !== 'sucursal-create' &&
+        namePage !== 'sucursal-update' &&
+        namePage !== 'punto-de-venta-create' &&
+        namePage !== 'punto-de-venta-update'
+
+
+      "
+      type="button"
+      class="btn btn-light btn-transparent d-flex align-items-center"
+      data-toggle="modal"
+      data-target="#myModal"
+    >
+      <h5 class="mr-auto">{{titular}}</h5>
+      <i class="fas fa-pencil-alt"></i>
+    </button>
+
+    <div class="no-padding" *ngIf="namePage !== 'contacto-update' && namePage !== 'comercio-update'">
+      <div *ngIf="titleData?.id">
+        <ul class="list-group">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+            (click)="gotoPage(titleData.id)"
+          >
+            <div class="d-flex align-items-center">
+              <div class="avatar mr-3">
+                <img
+                  class="fondoAvatar"
+                  [src]="imgPerfil(titleData?.image)"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="name">
+                {{ titleData?.name }}
+              </div>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- <div class="top-min" *ngIf="namePage == 'comercio-create'">
+      <h6>Propietario</h6>
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center"
+      >
+        <div class="d-flex align-items-center">
+          <div class="name">No se definió propietario</div>
+        </div>
+      </li>
+    </div> -->
+    <div class="top-min no-padding" *ngIf="namePage == 'punto-de-venta-create'">
+      <h6>Comercio</h6>
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center"
+      >
+        <div class="d-flex align-items-center">
+          <div class="name">No se definió comercio</div>
+        </div>
+      </li>
+    </div>
+
+    <div class="no-padding" *ngIf="namePage === 'beneficio-create' || namePage === 'sucursal-create' || namePage === 'punto-de-venta-create' ">
+      <ul class="list-group top-min">
+        <h6 *ngIf="namePage === 'beneficio-create' || namePage === 'sucursal-create'">Comercio</h6>
+        <h6 *ngIf="namePage === 'punto-de-venta-create'">Sucursal</h6>
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+          (click)="gotoPage('comercio-detalle', receivedData.id)"
+        >
+          <div class="d-flex align-items-center">
+            <div class="avatar mr-3">
+              <img
+                class="fondoAvatar"
+                [src]="imgPerfil(receivedData?.image)"
+                style="object-fit: cover"
+              />
+            </div>
+            <div class="name">
+              {{ receivedData?.name }}
+            </div>
+          </div>
+          <i class="fas fa-chevron-right"></i>
+        </li>
+      </ul>
+    </div>
+
+    <div class="no-padding" *ngIf="namePage === 'punto-de-venta-update' ">
+      <ul class="list-group top-min">
+        <h6 >Comercio</h6>
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+          (click)="gotoPage('comercio-detalle', comercio.id)"
+        >
+          <div class="d-flex align-items-center">
+            <div class="avatar mr-3">
+              <img
+                class="fondoAvatar"
+                [src]="imgPerfil(comercio?.image)"
+                style="object-fit: cover"
+              />
+            </div>
+            <div class="name">
+              {{ comercio?.name }}
+            </div>
+          </div>
+          <i class="fas fa-chevron-right"></i>
+        </li>
+      </ul>
+
+      <ul class="list-group top-min">
+        <h6 >Sucursal</h6>
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+          (click)="gotoPage('sucursal-detalle', sucursal.id)"
+        >
+          <div class="d-flex align-items-center">
+            <div class="avatar mr-3">
+              <img
+                class="fondoAvatar"
+                [src]="imgPerfil(sucursal?.image)"
+                style="object-fit: cover"
+              />
+            </div>
+            <div class="name">
+              {{ sucursal?.name }}
+            </div>
+          </div>
+          <i class="fas fa-chevron-right"></i>
+        </li>
+      </ul>
+    </div>
+
+    <div class="no-padding" *ngIf="namePage === 'contacto-update'">
+      <ul class="list-group top-min">
+        <h6>Usuario Viapago</h6>
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+          (click)="gotoPage('usuario-detalle',items.contactUser.id)"
+        >
+          <div class="d-flex align-items-center">
+            <div class="avatar mr-3">
+              <img
+                class="fondoAvatar"
+                [src]="imgPerfil(items?.contactUser?.image)"
+                style="object-fit: cover"
+              />
+            </div>
+            <div class="name">
+              {{ items?.contactUser?.name }}
+            </div>
+          </div>
+          <i class="fas fa-chevron-right"></i>
+        </li>
+        <div class="top-min">
+          <h6>Razón social</h6>
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+
+          >
+            <div class="d-flex align-items-center">
+              <div class="name">No se definió la razón social</div>
+            </div>
+          </li>
+        </div>
+      </ul>
+    </div>
+
+    <app-form
+      class="no-padding"
+      [config]="config"
+      [closeCallbackFunction]="closeForm"
+      (title)="title($event)"
+      [userId]="titleData?.id"
+      [namePage]="namePage"
+    ></app-form>
+  </div>
+</div>
+
+<div *ngIf="namePage !== 'contacto-update'">
+  <div
+    class="modal fade"
+    id="myModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-top" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="myModalLabel">
+            <div class="d-flex align-items-center">
+              <span class="badge badge-pill badge-primary mr-2">{{
+                titleData?.name
+              }}</span>
+              <button
+                [hidden]="!titleData"
+                type="button"
+                class="close"
+                aria-label="Close"
+                (click)="titleData = ''"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="fixed-area">
+            <app-filtro
+              [optionGroups]="opciones"
+              (datoProcesado)="getData($event)"
+            ></app-filtro>
+          </div>
+          <div class="scrollable-area">
+            <ul class="list-group">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+                *ngFor="let titleData of items"
+                (click)="select(titleData)"
+              >
+                <div class="d-flex align-items-center">
+                  <div class="avatar mr-3">
+                    <img
+                      class="fondoAvatar"
+                      [src]="imgPerfil(titleData?.image)"
+                      style="object-fit: cover"
+                    />
+                  </div>
+                  <div class="name">
+                    {{ titleData?.name }}
+                  </div>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

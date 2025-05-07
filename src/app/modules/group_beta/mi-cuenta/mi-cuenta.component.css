@@ -1,0 +1,49 @@
+.img-perfil {
+  margin-bottom: 10px;
+  width: auto !important;
+}
+
+.img-perfil img {
+  height: 100%;
+  border-radius: 5px;
+  max-height: 230px;
+}
+
+.fondoAvatar {
+  height: 30px;
+  background: grey;
+  border-radius: 50%;
+}
+
+.position {
+  margin-top: 60px;
+}
+
+.card {
+  margin-top: 10px;
+}
+
+.back-button {
+  color: var(--primary);
+}
+
+.space {
+  margin-right: 5px;
+}
+
+/* .img-perfil .image-container {
+  position: relative;
+} */
+/* 
+.img-perfil .icon-container {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+} */
+
+.camara-boton {
+  position: initial;
+  /* left: -20px;
+  top: -20px; */
+}

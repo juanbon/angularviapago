@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row" *ngIf="namePageLista == 'transaccion-lista'">
+    <div class="col-md-12 col-sm-12 order-sm-first">
+      <button class="btn btn-primary back-button" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> Volver
+      </button>
+    </div>
+    </div>
+    <div class="row top justify-content-start">
+      <div class="col-md-3">
+        <h4>{{config.title}}</h4>
+      </div>
+      <div  class="col-md-9 text-right">
+        <button *ngIf="namePage === '/b/identidades' || namePage === '/b/usuarios' || namePage === '/b/comercios'"  class="btn btn-primary rounded-circle" (click)="navigateTo()">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <div *ngIf="namePageLista == 'transaccion-lista'" class="row justify-content-center">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row style-text">
+            <div class="col-md-3">
+              {{params?.name}}
+            </div>
+            <div class="col-md-3">
+              {{params?.cvu}}
+            </div>
+            <div class="col-md-3">
+              {{params?.alias}}
+            </div>
+            <div class="col-md-3">
+              ${{params?.balance |  number: '1.2-2' }}
+            </div>
+          </div>
+          </div>
+          </div>
+          </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <app-filtro
+            [searchPlaceholder]="searchPlaceholder"
+            [optionGroups]="opciones"
+            (datoProcesado)="getData($event)"
+          ></app-filtro>
+        </div>
+      </div>
+    </div>
+</div>
+<app-list-card
+    [sinType]="sinType"
+    [data]="items"
+    [title]="config.title"
+    [types]="config.types"
+    [urlDelete]="config.url.delete"
+    [urlSearch]="config.url.search"
+    [showGet]="config.showGet"
+    [showAdd]="config.showAdd"
+    [showEdit]="config.showEdit"
+    [showDelete]="config.showDelete"
+    [columnId]="config.columnId"
+    [report]="false"
+    [filter]="config.filters"
+    [permiso]="config.permiso"
+    [goTo]="config.goTo"
+    [col]="config.col"
+    [short]="config.shortCard"
+    (action)="action($event)"
+    >
+
+</app-list-card>
+<div class="row justify-content-center mt-4" *ngIf="showLoadMoreButton">
+    <div class="col-md-2 text-center">
+      <button class="btn btn-primary" (click)="loadMoreItems()">Ver más</button>
+    </div>
+  </div>

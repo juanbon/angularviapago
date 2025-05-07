@@ -1,0 +1,200 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 order-sm-first">
+      <button class="btn btn-primary back-button" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> Volver
+      </button>
+    </div>
+    </div>    
+<div class="card">
+    <div class="container">
+        <div class="row" style="margin-bottom: 20px; margin-top: 20px;">
+            <div class="col-md-12 col-sm-12 order-sm-first">
+              <h4>{{data?.titulo | translate}}</h4>
+            </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Pago de servicios</label>
+      </div>
+      </div>
+      <div class="row">
+      <div class="col">
+        <label>{{data?.user?.status | translate}}</label>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h5>Transacción</h5>
+          </div>
+        </div>
+    <div class="row">
+      <div class="col">
+        <label>Fecha</label>
+        </div>
+        <div class="col">
+        <span>{{data?.user?.humanType}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Número</label>
+      </div>
+      <div class="col">
+        <span>{{data?.user?.number}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Usuario origen</label>
+      </div>
+      <div class="col">
+        <span>{{data?.user?.sourceUser?.name}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Monto</label>
+      </div>
+      <div class="col">
+        <span>$ {{data?.user?.amount}}.-</span>
+      </div>
+    </div>
+    <div *ngIf="data?.titulo == 'transactionsLogs'">
+    <div class="row">
+    <div class="col">
+        <h5>Transición</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Fecha</label>
+        </div>
+        <div class="col">
+        <span>{{data?.item?.updatedAt | date: 'EEE d \'de\' MMMM \'de\' y HH:mm \'hs\'' }}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Usuario</label>
+      </div>
+      <div class="col">
+        <span>{{data?.item?.user.name}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Estado final</label>
+      </div>
+      <div class="col">
+        <span>{{data?.item?.finalStatus}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Saldo final origen</label>
+      </div>
+      <div class="col">
+        <span>$ {{data?.item?.finalSourceBalance}}.-</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Saldo final destino</label>
+      </div>
+      <div class="col">
+        <span>$ {{data?.item?.finalTargetBalance}}.-</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Contexto</label>
+      </div>
+      <div class="col">
+        <span>{{data?.item?.context}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>IP</label>
+      </div>
+      <div class="col">
+        <span>{{data?.item?.ip}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Agent</label>
+      </div>
+      <div class="col">
+        <span>{{data?.item?.agent}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Parámetros</label>
+      </div>
+      <div class="col">
+        <div class="card">
+        <pre style="font-size: 10px; color:blue">{{this.data?.item?.params}} </pre>
+    </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col">
+          <label>Resultado</label>
+        </div>
+        <div class="col">
+          <span >{{data?.item?.result | translate}}</span>
+        </div>
+      </div>
+      </div>
+      <div *ngIf="data?.titulo == 'transactionsWsLogs'">
+        <div class="row">
+            <div class="col">
+                <h5>Interacción</h5>
+              </div>
+        </div>
+        <div class="row">
+            <div class="col">
+              <label>Fecha</label>
+            </div>
+            <div class="col">
+              <span>{{data?.item?.updatedAt | date: 'EEE d \'de\' MMMM \'de\' y HH:mm \'hs\'' }}</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label>Tipo</label>
+            </div>
+            <div class="col">
+              <span>{{data?.item?.type}}</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label>Contexto</label>
+            </div>
+            <div class="col">
+              <span>{{data?.item?.context}}</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label>Parámetros</label>
+            </div>
+            <div class="col">
+              <pre style="font-size: 10px; color:blue">{{data?.item?.params}}</pre>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label>Resultado</label>
+            </div>
+            <div class="col">
+                <pre style="font-size: 10px; color:blue">{{data?.item?.result | translate}}</pre>
+            </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  

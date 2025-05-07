@@ -1,0 +1,90 @@
+<div class="table-custom" *ngIf="!permiso">
+  <div class="alert alert-warning d-flex align-items-center" role="alert">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+    </svg>
+    <div>No posee permisos para ver esta pantalla.</div>
+  </div>
+</div>
+<div class="table-custom" *ngIf="permiso">
+  <app-header-table [title]="headerTitle" [new]="save" [report]="report" [showFilter]="!showForm"
+    [functionReport]="downloadReport" [functionNew]="newData" [filters]="filter" [showAdd]="showAdd" [showMaxItems]="showMaxItems" >
+  </app-header-table>
+
+  <div class="card">
+    <app-form class="forms"  [columnId]="columnId" [logs]="logs" [config]="config" [closeCallbackFunction]="closeCallbackFunction" *ngIf="showForm">
+    </app-form>
+
+    <div class="card-body table-container" id="content" #content *ngIf="!showForm && !hideTable" >
+      <!--<div class="spinner" *ngIf="spinner">
+        <img src="./../../../../assets/img/loader.svg" alt="Cargando">
+      </div>-->
+      <table class="table" id="table-download" *ngIf="!spinner">
+        <thead *ngIf="items">
+          <tr>
+            <ng-container *ngFor="let columnHeader of columns">
+              <th scope="col">{{ columnHeader.text }}</th>
+            </ng-container>
+            <th  scope="col" *ngIf="!report && (showGet || showEdit || showDelete) && columns" class="acciones">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let row of items">
+            <tr>
+              <ng-container *ngFor="let columnHeader of columns">
+                <td>
+                  <span class="badge bg-success" *ngIf="booleans.includes(columnHeader.key) &&  row[columnHeader.key]=='enable'" > si </span>
+                  <span class="badge bg-danger" *ngIf="booleans.includes(columnHeader.key) && row[columnHeader.key]=='disable'" >no</span>
+                  <span *ngIf="!booleans.includes(columnHeader.key)  && columnHeader.key!=='image' && columnHeader.key!=='logo130px' && columnHeader.key!=='logo32px'" >{{ row[columnHeader.key] }}</span>
+                  <span *ngIf="!booleans.includes(columnHeader.key) && (columnHeader.key==='image' || columnHeader.key==='logo130px' || columnHeader.key==='logo32px')" ><img width=130 src="{{ row[columnHeader.key] }}"/></span>
+                </td>
+              </ng-container>
+              <td *ngIf="!report && (showGet || showEdit || showDelete)" class="acciones">
+                <button type="button" class="btn btn-outline-success rounded-pill buttom-cstm" *ngIf="showGet"
+                  (click)="showData(row[columnId])">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <button type="button" class="btn btn-outline-primary rounded-pill buttom-cstm edit-buttom" *ngIf="showEdit"
+                  (click)="editData(row[columnId])">
+                  <i class="bi bi-pencil-fill"></i>
+                </button>
+                <button type="button" class="btn btn-outline-danger rounded-pill buttom-cstm" *ngIf="showDelete"
+                  (click)="deleteData(row[columnId])">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="paginated && totalPages > 0" class="pagination">
+    <div class="pages">Total de páginas: {{totalPages}}</div>
+    <div class="input-group input-page">
+      <button class="btn btn-outline-secondary" type="button" (click)="change()">
+        <i class="bi bi-arrow-right-square"></i>
+      </button>
+      <input type="number" class="form-control" id="page">
+    </div>
+    <nav>
+      <ul class="pagination">
+        <li class="page-item" (click)="first()" *ngIf="currentPage != 1">
+          <a class="page-link"><i class="bi bi-chevron-double-left"></i></a>
+        </li>
+        <li class="page-item" (click)="prev()" *ngIf="currentPage != 1">
+          <a class="page-link"><i class="bi bi-arrow-left"></i></a>
+        </li>
+        <li class="page-item">
+          <a class="page-link">{{currentPage}} <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="page-item" (click)="next()" *ngIf="currentPage != totalPages">
+          <a class="page-link"><i class="bi bi-arrow-right"></i></a>
+        </li>
+        <li class="page-item" (click)="last()" *ngIf="currentPage != totalPages">
+          <a class="page-link"><i class="bi bi-chevron-double-right"></i></a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

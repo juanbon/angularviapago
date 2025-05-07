@@ -1,0 +1,164 @@
+
+<div class="container" *ngIf="(userData$ | async) as userData">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 order-sm-first">
+          <button class="btn btn-primary back-button" (click)="goBack()">
+            <i class="fas fa-arrow-left"></i> Volver
+          </button>
+        </div>
+        </div>
+        <div class="row position">
+          <div class="col-md-6 col-sm-12 order-md-first text-left">
+            <h4 class="text-left">Tarjeta</h4>
+            </div>
+            <div class="col-md-6 col-sm-12 order-md-last text-right">
+            <!-- <button class="btn btn-primary text-right edit-button" >
+              <i class="fas fa-pencil-alt"></i> 
+            </button> -->
+          </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+    <div *ngIf="userData?.userId as userId">
+    <h5>Usuario</h5>
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center" (click)="gotoPage('usuario-detalle', userId)">
+        <div class="d-flex align-items-center">
+            <div class="avatar mr-3 ">
+                <img class="fondoAvatar" [src]="imgPerfil(userData?.user.image)" style="object-fit: cover;">
+            </div>
+          <div class="name">
+            {{userData?.user.name}}
+          </div>
+        </div>
+        <i class="fas fa-chevron-right"></i>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="userData?.userId as userId">
+    <h5>Razón Social</h5>
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center" (click)="gotoPage('identidad-detalle', userData?.userIdentity.id)">
+        <div class="d-flex align-items-center">
+            <div class="avatar mr-3 ">
+                <!-- <img class="fondoAvatar" [src]="imgPerfil(userData?.userIdentity.image)" style="object-fit: cover;"> -->
+            </div>
+          <div class="name">
+            {{userData?.userIdentity.name}}
+          </div>
+        </div>
+        <i class="fas fa-chevron-right"></i>
+      </li>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div>
+            <h5 class="input-field">{{userData?.name | translate}}</h5>
+      </div>
+    </div>
+  <div class="col-4">
+    <div>
+          <label class="small-label">Estado</label>
+          <h5 class="input-field"                       
+          [ngClass]="'status-' + userData?.status"
+          >{{userData?.status | translate}}</h5>
+    </div>
+  </div>
+  <div class="col-4">
+    <div>
+        <label class="small-label">Tipo</label>
+        <h5 class="input-field">{{userData?.subType | translate}}</h5>
+  </div>
+  </div>
+  <div class="col-4">
+    <div >
+        <img class="position-img" [src]="imgPerfil(userData?.image)">
+  </div>
+  </div>
+  <div class="col-xs-12">
+    <div>
+          <label class="small-label">ID de Pomelo</label>
+          <h5 class="input-field">{{userData?.pomeloId}}</h5>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="userData?.subType === 'virtual'">
+    <div class="col-12">
+        <img src="assets/img/viapago-card.png">
+    </div>
+</div>
+<div class="row" >
+    <div class="d-flex justify-content-center">
+      <button *ngIf="userData?.subType === 'physical' && userData?.status === 'enable' && userData?.mode === 'pomelo'" class="btn btn-primary mr-2" (click)="pausar()">Pausar</button>
+      <button *ngIf="userData?.subType === 'physical' && userData?.status === 'enable' && userData?.mode === 'pomelo'" class="btn btn-primary mr-2" (click)="openModalPIN()">Cambiar PIN</button>
+        <button *ngIf="userData?.subType === 'physical' && userData?.status === 'pending'" class="btn btn-primary mr-2" (click)="openModal()">Activar</button>
+        <button *ngIf="userData?.subType === 'physical' && userData?.status !== 'disable'" class="btn btn-primary"  (click)="openSelect()">Deshabilitar</button>
+      </div>
+      
+</div>
+  </div>
+  </div>
+  </div>
+
+  <div class="modal" [ngClass]="{ 'modal-open': showModalPIN }">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Ingrese un pin de 4 números no consecutivos ni repetidos</h2>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input placeholder="pin" type="number" class="form-control" min="1" max="9999" [(ngModel)]="pin">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+          <button type="button" class="btn btn-primary" [disabled]="!pin" (click)="changePIN()">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" [ngClass]="{ 'modal-open': showModal }">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Ingrese los 16 números de su tarjeta y un pin de 4 números no consecutivos ni repetidos</h2>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input placeholder="nro de tarjeta" type="number" class="form-control" min="5500000000000000" max="5599999999999999" [(ngModel)]="nroTarjeta">
+          </div>
+          <div class="form-group">
+            <input placeholder="pin" type="number" class="form-control" min="1" max="9999" [(ngModel)]="pin">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+          <button type="button" class="btn btn-primary" [disabled]="!nroTarjeta || !pin" (click)="activar()">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" [ngClass]="{ 'select-open': showSelect }">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Seleccione el motivo de la baja</h2>
+        </div>
+        <div class="modal-body">
+        <div class="modal-footer">
+          <select class="form-control form-select" [(ngModel)]="selectMotivo">
+            <option value="LOST">Pérdida</option>
+            <option value="STOLEN">Robo</option>
+            <option value="BROKEN">Deterioro</option>
+          </select>
+          <button type="button" class="btn btn-secondary" (click)="closeSelect()">Cancelar</button>
+          <button type="button" class="btn btn-primary" [disabled]="!selectMotivo" (click)="deshabilitar()">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>

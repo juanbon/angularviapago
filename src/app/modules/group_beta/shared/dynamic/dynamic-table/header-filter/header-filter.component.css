@@ -1,0 +1,104 @@
+.buttom-cstm {
+    height: 31px !important;
+    width: 60px;
+    margin-left: 8px;
+    margin-right: 8px;
+    height: 35px;
+    color: #fff !important;
+    border-color: #008376 !important;
+    font-size: 12px;
+}
+
+.buttom-cstm-clear {
+    height: 31px !important;
+    width: 31px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: #fff !important;
+    font-size: 15px;
+    border: none;
+    text-align: center;
+}
+
+.filter-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.form-select {
+    width: 188px;
+    height: 31px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 14px !important;
+}
+
+input {
+    width: 188px;
+    height: 31px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+:host ::ng-deep input {
+    width: 188px !important;
+    height: 31px !important;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+:host ::ng-deep .input-date input {
+    width: 188px !important;
+    height: 30px !important;
+    font-size: 14px !important;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+:host ::ng-deep .mat-form-field-infix {
+    border-top-width: 0px;
+    padding-top: 0px;
+    padding-bottom: 1px;
+}
+
+:host ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: #fff;
+}
+
+:host ::ng-deep .mat-button-wrapper {
+    font-size: 20px;
+}
+
+:host ::ng-deep .form-select {
+    width: 188px !important;
+    height: 31px !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    font-size: 14px !important;
+}
+
+app-field {
+    height: 31px !important;
+}
+
+:host ::ng-deep h6.card-title {
+    margin-bottom: 3px;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 12px;
+}
+
+app-field {
+    padding-left: 8px;
+    padding-right: 8px;
+}

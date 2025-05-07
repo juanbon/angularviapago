@@ -1,0 +1,151 @@
+.card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  /* margin-bottom: 10px; */
+  min-height: 180px;
+  margin-top: 0;
+}
+
+.header {
+  display: flex;
+  min-height: 75px;
+  max-height: 150px;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+}
+
+.avatar img {
+  background-color: #f25318;
+  min-width: 36px;
+  max-width: 36px;
+  max-height: 36px;
+  min-height: 36px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.title {
+  font-size: 14px;
+  margin: 0;
+}
+
+.action-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-left: auto;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+.action-button img {
+  height: 20px;
+}
+
+.action-button:hover {
+  height: 40px;
+  width: 40px;
+  background-color: #f25318;
+}
+
+.description {
+  margin-bottom: 5px;
+  color: #000;
+  font-size: 14px;
+  /* left: -111px; */
+}
+
+.text {
+  margin-bottom: 10px;
+  color: #eb445a;
+  font-size: 12px;
+}
+
+.header-label-top {
+  color: #eb445a;
+  margin: 0px;
+  align-self: flex-start;
+  font-size: 11px;
+  margin-left: 5px;
+}
+.header-label-bottom {
+  color: #000000;
+  margin: 0px;
+  align-self: flex-start;
+  font-size: 10px;
+}
+
+.label {
+  padding: 5px 10px;
+  background-color: #ccc;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.text-red {
+  color: red;
+}
+
+.text-grey {
+  color: gainsboro;
+}
+
+.text-green {
+  color: green;
+}
+
+.font {
+  font-size: 12px;
+}
+
+.sin-fondo {
+  background-color: #fff;
+  color: #000000;
+  font-size: 12px;
+}
+
+.card-body {
+  padding: 0 !important;
+}
+
+card {
+  position: relative;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.top-0 {
+  top: 0;
+}
+
+.end-0 {
+  right: 0;
+}
+
+.action-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.action-button img {
+  width: 16px;
+  height: 16px;
+}
+
+.card {
+  overflow: visible;
+  /* padding-left: 40px; Ajusta el espacio para que el botón no se solape con el contenido */
+}
+
+.ago {
+  color: #3880ff;
+  margin-bottom: 10px;
+}

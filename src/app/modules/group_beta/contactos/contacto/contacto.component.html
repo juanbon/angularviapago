@@ -1,0 +1,214 @@
+<div class="container">
+    <div>
+      <div class="col-md-12 col-sm-12 order-sm-first">
+        <button class="btn btn-primary back-button" (click)="goBack()">
+          <i class="fas fa-arrow-left"></i> Volver
+        </button>
+      </div>
+      <div class="row position">
+        <div class="col-md-6 col-sm-12 order-md-first text-left">
+          <h4 class="text-left">Contactos</h4>
+          </div>
+          <div class="col-md-6 col-sm-12 order-md-last text-right">
+
+      </div>
+    </div>
+      <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-5 col-sm-12 order-sm-last offset-md-7">
+            <button class="btn btn-primary btn-round camara-boton" (click)="selectProfilePicture()">  
+              <i [class]="(userData$ | async)?.image == null ? 'fas fa-camera' : 'fas fa-trash'"></i>
+             </button>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none" #fileInput>
+        </div>
+        </div>
+       <form>
+    <div class="row">
+      <div class="col-md-5 col-sm-12 order-sm-last img-perfil order-md-last">
+       <img [src]="imgPerfil((userData$ | async)?.image)" style="object-fit: cover;">
+      
+      </div>
+      <div style="margin-top: 30px;" class="col-md-7 col-sm-12 order-sm-last order-md-first">
+        <div class="form-group">
+            <!-- <label for="name">Nombre</label> -->
+            <div class="input-group">
+              <input type="text" id="name" class="form-control" [value]="(userData$ | async)?.name" disabled>
+              <div class="input-group-append">
+                <a [routerLink]="'/contacto-update/' + (userData$ | async)?.id" class="btn btn-outline-secondary" title="Editar">
+                  <i class="fas fa-pencil-alt"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+        <div class="row">
+          <div class="col-md-6 col-6">
+            <div class="form-group">
+              <label for="status">Estado</label>
+              <input type="text" id="status" class="form-control" [value]="(userData$ | async)?.status | translate" disabled [ngClass]="'status-' + (userData$ | async)?.status">
+            </div>
+          </div>
+          <div class="col-md-6 col-6">
+            <!-- <div class="form-group">
+              <label for="access">Acceso</label>
+              <input type="text" id="access" class="form-control" [value]="(userData$ | async)?.access | translate" disabled>
+            </div> -->
+          </div>
+          <div class="col-md-6 col-12">
+            <!-- <div class="form-group">
+              <label for="username">Usuario</label>
+              <input type="text" id="username" class="form-control" [value]="(userData$ | async)?.username" disabled>
+            </div> -->
+          </div>
+          <div class="col-md-6 col-12">
+            <!-- <div class="form-group">
+              <label for="password">Clave</label>
+              <input type="text" id="password" class="form-control" [value]="(userData$ | async)?.password || ''" disabled>
+            </div> -->
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label for="phone">Teléfono</label>
+              <input type="text" id="phone" class="form-control" [value]="(userData$ | async)?.phone | translate" disabled>
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" class="form-control" [value]="(userData$ | async)?.email | translate" disabled>
+            </div>
+          </div>
+          <div class="col-12">
+            <!-- <div class="form-group">
+              <label for="pomeloId">Pomelo ID</label>
+              <input type="text" id="pomeloId" class="form-control" [value]="(userData$ | async)?.pomeloId" disabled>
+            </div> -->
+          </div>
+          <div class="col-md-6 col-12">
+            <!-- <div class="form-group">
+              <label for="systemVersion">Versión APP</label>
+              <input type="text" id="systemVersion" class="form-control" [value]="(userData$ | async)?.systemVersion | translate" disabled>
+            </div> -->
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label for="notes">Notas</label>
+              <textarea id="notes" class="form-control" [value]="(userData$ | async)?.notes" disabled></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="(userData$ | async)?.contactUser as contactUser">
+        <h5>Usuario Viapago</h5>
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center" (click)="gotoPage(contactUser?.id)">
+            <div class="d-flex align-items-center">
+                <div class="avatar mr-3 ">
+                    <img class="fondoAvatar" [src]="imgAvatar(contactUser?.image)" style="object-fit: cover;">
+                </div>
+              <div class="name">
+                {{contactUser?.name}}
+              </div>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+          </li>
+        </ul>
+      </div>
+      <div class="top-min">
+        <h5>Razón social</h5>
+        <li class="list-group-item d-flex justify-content-between align-items-center" (click)="gotoPage(items.contactUser.id)">
+          <div class="d-flex align-items-center">
+              
+            <div class="name">
+              No se definió la razón social
+            </div>
+          </div>
+        </li>
+       
+      </div>
+      <div *ngIf="(userData$ | async)?.user as datasUser">
+
+        <button type="button" style="width: 100%;" class="btn btn-light btn-transparent d-flex align-items-center" data-toggle="modal" data-target="#myModal">
+            <h5 class="mr-auto">Usuario</h5>
+            <i class="fas fa-pencil-alt ml-auto"></i>
+          </button>
+          
+<div *ngIf="datasUser?.id">
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center" (click)="gotoPage(datasUser.id)">
+        <div class="d-flex align-items-center">
+            <div class="avatar mr-3 ">
+                <img class="fondoAvatar" [src]="imgAvatar(datasUser?.image)" style="object-fit: cover;">
+            </div>
+          <div class="name">
+            {{datasUser?.name}}
+          </div>
+        </div>
+        <i class="fas fa-chevron-right"></i>
+      </li>
+    </ul>
+  </div>
+</div>
+  <div class="modal fade" #myModal id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-top" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="myModalLabel">
+                <div class="d-flex align-items-center">
+                    <span class="badge badge-pill badge-primary mr-2">{{ titleData?.name || (userData$ | async)?.user.name }}</span>
+                    <button [hidden]="!titleData"  type="button" class="close" aria-label="Close" (click)="titleData=''">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="titleData=''">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="fixed-area">
+                <app-filtro 
+                [optionGroups]="opciones"
+                (datoProcesado)="getData($event)"
+              ></app-filtro>
+            </div>
+            <div class="scrollable-area">
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let titleData of items" (click)="select(titleData)">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar mr-3">
+                      <img class="fondoAvatar" [src]="imgAvatar(titleData?.image)" style="object-fit: cover;">
+                    </div>
+                    <div class="name">
+                      {{titleData?.name}}
+                    </div>
+                  </div>
+                  <i class="fas fa-chevron-right"></i>
+                </li>
+                <div class="row justify-content-center mt-4" *ngIf="showLoadMoreButton">
+                    <div class="col-md-2 text-center">
+                      <button class="btn btn-primary" (click)="loadMoreItems()">Ver más</button>
+                    </div>
+                  </div>
+              </ul>        
+              </div>  
+    
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="titleData = ''">Cerrar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="guardarCambios(titleData)">Guardar cambios</button>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+
+</form>
+      </div>
+      </div>
+    </div>
+  
+    
+    

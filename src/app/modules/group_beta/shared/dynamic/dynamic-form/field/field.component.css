@@ -1,0 +1,87 @@
+.errorMessage {
+  color: red;
+}
+
+.form-check input {
+  margin-left: 0px;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  margin-right: 10px; /* Espacio entre el avatar y el campo de entrada */
+}
+
+.input-field {
+  flex: 1; /* El campo de entrada ocupa todo el espacio restante */
+}
+
+.arrow-icon {
+  margin-left: 10px; /* Espacio entre el campo de entrada y el icono de flecha */
+}
+
+/* .avatar img {
+    background-color: #E5E5E5;
+    width: 36px;
+    margin-right: 10px;
+    border-radius: 50%;
+    height: 36px;
+    object-fit: cover;
+  } */
+
+.input-container .input-field {
+  outline: none; /* Elimina el contorno de selección */
+  cursor: pointer; /* Cambia el cursor a "no permitido" */
+}
+
+.input-container .input-field:focus {
+  outline: none; /* Elimina el contorno de selección cuando está enfocado */
+}
+
+.error {
+  position: absolute;
+  top: 35px;
+  font-size: 10px;
+  color: red;
+  background-color: #fff;
+}
+
+.title {
+  font-size: 16px;
+  color: blue;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: blue;
+}
+
+.line-bottom {
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 10px;
+  font-weight: 300;
+}
+
+.img-perfil {
+  margin-bottom: 10px;
+}
+
+.img-perfil img {
+  height: 100%;
+  border-radius: 5px;
+  max-height: 230px;
+}
+
+.fondoAvatar {
+  height: 30px;
+  width: 30px;
+  background: grey;
+  border-radius: 50%;
+}
+
+.eyeheight {
+  height: 31px;
+}

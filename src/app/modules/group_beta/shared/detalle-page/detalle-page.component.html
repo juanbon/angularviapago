@@ -1,0 +1,418 @@
+<div class="container"  *ngIf="userData$ | async as userData">
+  <div class="row">
+    <div class="col-md-12 col-sm-12 order-sm-first">
+      <button class="btn btn-primary back-button" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> Volver
+      </button>
+    </div>
+  </div>
+  <div class="row position">
+    <div class="col-md-6 col-sm-12 order-md-first text-left">
+      <h4 class="text-left">{{ config.title }}</h4>
+    </div>
+    <div class="col-md-6 col-sm-12 order-md-last text-right" *ngIf="namePage == 'punto-de-venta-detalle'">
+      <button class="btn btn-primary edit-button" (click)="goToSailpointDetail(userData?.branch, userData?.store)">
+        <i class="fas fa-pencil-alt"></i>
+      </button>
+    </div>
+  </div>
+  <div class="row top">
+    <div class="d-flex justify-content-between align-items-center">
+      <!-- <h4 class="mr-auto">{{ config.title }}</h4> -->
+      <button
+        *ngIf="namePage !== 'transaccion' && namePage !== 'usuario-detalle' && namePage !== 'punto-de-venta-detalle'"
+        type="button"
+        class="btn btn-light btn-transparent d-flex align-items-center"
+        data-toggle="modal"
+        data-target="#myModal"
+      >
+        <i class="fas fa-pencil-alt"></i>
+      </button>
+    </div>
+
+    <div *ngIf="namePage == 'usuario-detalle'">
+      <div *ngIf="userData?.id">
+        <ul class="list-group">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+            (click)="gotoPage('usuario-detalle', userData?.id)"
+          >
+            <div class="d-flex align-items-center">
+              <div class="avatar mr-3">
+                <img
+                  class="fondoAvatar"
+                  [src]="imgPerfil((userImageData$ | async)?.image)"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="name">
+                {{ userData?.name }}
+              </div>
+            </div>
+            <i [hidden]="privilege !== 'administrator'" class="fas fa-chevron-right"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div *ngIf="namePage == 'punto-de-venta-detalle'" class="no-padding">
+      <div *ngIf="userData?.branch.id" >
+        <ul class="list-group">
+          Sucursal
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+            (click)="gotoPage('sucursal-detalle', userData?.branch.id)"
+          >
+            <div class="d-flex align-items-center">
+              <div class="avatar mr-3">
+                <img
+                  class="fondoAvatar"
+                  [src]="imgPerfil(userData?.branch.image)"
+                  style="object-fit: cover"
+                />
+              </div>
+              <div class="name">
+                {{ userData?.branch.name }}
+              </div>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col no-padding">
+      <app-form
+        [config]="config"
+        [closeCallbackFunction]="closeForm"
+        (title)="title($event)"
+        [userId]="titleData?.id"
+      ></app-form>
+    </div>
+
+    <div
+      class="col-md-5 col-sm-12 d-flex flex-column align-items-center"
+      *ngIf="namePage == 'usuario-detalle'"
+    >
+      <div class="row mt-5">
+        <div class="col-md-5 col-sm-12 order-sm-last">
+          <button
+            class="btn btn-primary btn-round camara-boton"
+            (click)="selectProfilePicture()"
+          >
+            <i
+              [class]="userData?.image == null ? 'fas fa-camera' : 'fas fa-trash'"
+            ></i>
+          </button>
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+            style="display: none"
+            #fileInput
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5 col-sm-12 order-sm-last img-perfil">
+          <img [src]="imgPerfil((userImageData$ | async)?.image)" style="object-fit: cover" />
+        </div>
+      </div>
+    </div>
+    <!--usuario-detalle identidades  -->
+    <div *ngIf="namePage == 'usuario-detalle'">
+      <div
+        class="recuadro"
+        *ngIf="userData?.usersIdentities && userData?.usersIdentities.length"
+      >
+        <h5>Identidades</h5>
+        <div *ngFor="let userIdentity of userData?.usersIdentities">
+          <div class="card">
+            <div class="card-body">
+              <div class="row fondoCuit">
+                <div class="col-md-0.5 col-1 text-center">
+                  <i
+                    class="fas fa-eye"
+                    (click)="navigateToDetail(userIdentity, 'identidad')"
+                  ></i>
+                </div>
+                <div class="col-md">
+                  CUIT: <span class="text-weight">{{ userIdentity.cuit }}</span>
+                </div>
+                <div class="col-md text-weight">
+                  {{ userIdentity.name }}
+                </div>
+                <div class="col-md text-weight ion-hide-md-down">
+                  {{ userIdentity.type | translate }}
+                </div>
+                <div class="col-md text-weight ion-hide-md-down">
+                  {{ userIdentity.subtype | translate }}
+                </div>
+                <div
+                  class="col-md text-weight ion-hide-md-down"
+                  [class]="'status-' + userIdentity.status"
+                >
+                  {{ userIdentity.status | translate }}
+                </div>
+              </div>
+              <div
+                class="row"
+                *ngIf="
+                  userIdentity.usersAccounts &&
+                  userIdentity.usersAccounts.length
+                "
+              >
+                <h5 class="title">Cuentas</h5>
+                <div class="col-md-2 offset-md-2 d-none d-md-block">
+                  <span>TIPO</span>
+                </div>
+                <div class="col-md-4 text-wrap d-none d-md-block">
+                  <span>CVU / ALIAS</span>
+                </div>
+                <div class="col-md-2 text-left d-none d-md-block">
+                  <span>SALDO</span>
+                </div>
+                <div class="col-md-2 text-wrap d-none d-md-block">
+                  <span>ESTADO</span>
+                </div>
+              </div>
+              <div
+                class="row fondo"
+                *ngFor="
+                  let userAccount of userIdentity.usersAccounts;
+                  let i = index
+                "
+                [ngClass]="{ 'even-fondo': i % 2 === 0 }"
+              >
+                <div class="col-md-0.5 col-1 offset-md-1">
+                  <i
+                    class="fas fa-eye"
+                    (click)="navigateToDetail(userAccount, 'cuenta')"
+                  >
+                  </i>
+                  <br />
+                  <i
+                    class="fas fa-wallet"
+                    (click)="navigateToDetail(userAccount, 'cuenta')"
+                  >
+                  </i>
+                </div>
+                <div class="col-md-2 col-xs-12 text-weight">
+                  <span class="font-weight-bold d-md-none">TIPO: </span>
+                  {{ userAccount.type | translate }}
+                </div>
+                <div class="col-md-4 col-xs-12 text-wrap text-weight">
+                  <span class="font-weight-bold d-md-none">CVU / ALIAS: </span>
+                  {{ userAccount.cvu }} {{ userAccount.alias }}
+                </div>
+                <div class="col-md-2 col-xs-12 text-left text-weight">
+                  <span class="font-weight-bold d-md-none">SALDO: </span> $
+                  {{ userAccount.balance }}.-
+                </div>
+                <div
+                  class="col-md-2 col-xs-12 text-wrap text-weight"
+                  [ngClass]="'status-' + userAccount.status"
+                >
+                  <span class="font-weight-bold d-md-none">ESTADO: </span>
+                  {{ userAccount.status | translate }}
+                </div>
+              </div>
+              <div
+                class="row"
+                *ngIf="userIdentity.cards && userIdentity.cards.length"
+              >
+                <h5 class="title">Tarjetas</h5>
+                <div class="col-md-2 d-none d-md-block offset-md-2">
+                  <span>TIPO</span>
+                </div>
+                <div class="col-md-4 text-wrap d-none d-md-block">
+                  <span>NOMBRE</span>
+                </div>
+                <div class="col-md-2 text-left d-none d-md-block">
+                  <span>VENCIMIENTO</span>
+                </div>
+                <div class="col-md-2 text-wrap d-none d-md-block">
+                  <span>ESTADO</span>
+                </div>
+              </div>
+              <div
+                class="row fondo"
+                *ngFor="let card of userIdentity.cards; let in = index"
+                [ngClass]="{ 'even-fondo': in % 2 === 0 }"
+              >
+                <div class="col-md-0.5 col-1 offset-md-1">
+                  <i
+                    class="fas fa-eye"
+                    (click)="navigateToDetail(card, 'cards')"
+                  ></i
+                  ><br />
+                </div>
+                <div class="text-weight col-md-2">
+                  <span class="font-weight-bold d-md-none">TIPO: </span>
+                  {{ card.type | translate }} {{ card.subType | translate }}
+                </div>
+                <div class="text-weight col-md-4 text-wrap">
+                  <span class="font-weight-bold d-md-none">NOMBRE: </span>
+                  {{ card.name | translate }}
+                </div>
+                <div class="text-weight col-md-2 text-left">
+                  <span class="font-weight-bold d-md-none">VENCIMIENTO: </span>
+                  {{ card.expiration }}
+                </div>
+                <div
+                  class="text-weight col-md-2 text-wrap"
+                  [ngClass]="'status-' + card.status"
+                >
+                  <span class="font-weight-bold d-md-none">ESTADO: </span>
+                  {{ card.status | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--fin usuario-detalle identidades  -->
+    </div>
+
+  </div>
+
+  <div *ngIf="namePage == 'transaccion'">
+    <app-log
+      [items]="userData?.transactionsLogs"
+      [titulo]="'transactionsLogs'"
+      [userData]="userData"
+    >
+    </app-log>
+    <app-log
+      [items]="userData?.transactionsWsLogs"
+      [titulo]="'transactionsWsLogs'"
+      [userData]="userData"
+    >
+    </app-log>
+  </div>
+
+  <div
+  class="no-padding row"
+  *ngIf="userData?.store as datasStore"
+>
+  <button
+    type="button"
+    style="width: 100%"
+    class="btn btn-light btn-transparent d-flex align-items-center"
+    data-toggle="modal"
+    data-target="#myModal"
+  >
+    <h5 class="mr-auto no-left-margin">Comercio</h5>
+    <i class="fas fa-pencil-alt ml-auto"></i>
+  </button>
+
+  <div *ngIf="datasStore?.id" class="no-padding">
+    <ul class="list-group">
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center"
+        (click)="gotoComercio('comercio-detalle', datasStore.id)"
+      >
+        <div class="d-flex align-items-center">
+          <div class="avatar mr-3">
+            <img
+              class="fondoAvatar"
+              [src]="imgAvatar(datasStore?.image)"
+              style="object-fit: cover"
+            />
+          </div>
+          <div class="name">
+            {{ datasStore?.name }}
+          </div>
+        </div>
+        <i class="fas fa-chevron-right"></i>
+      </li>
+    </ul>
+  </div>
+</div>
+<div *ngIf="namePage == 'punto-de-venta-detalle'" class="d-flex flex-column align-items-center">
+  <button class="btn btn-primary m-2">Compartir Información</button>
+  <button class="btn btn-secondary m-2" (click)="generatePDF()">Generar PDF</button>
+</div>
+</div>
+
+  <!-- modal RS -->
+  <div *ngIf="namePage == 'punto-de-venta-detalle'" class="modal fade" #myModal id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-top" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="myModalLabel">
+            <div class="d-flex align-items-center">
+                <span class="badge badge-pill badge-primary mr-2">{{ titleData?.name || (userData$ | async)?.store.name }}</span>
+                <button [hidden]="!titleData"  type="button" class="close" aria-label="Close" (click)="titleData=''">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="titleData=''">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="fixed-area">
+            <app-filtro
+            [optionGroups]="opciones"
+            (datoProcesado)="getData($event)"
+            [searchPlaceholder]="placeholder"
+          ></app-filtro>
+        </div>
+        <div class="scrollable-area">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let titleData of items" (click)="select(titleData)">
+              <div class="d-flex align-items-center">
+                <div class="avatar mr-3">
+                  <img class="fondoAvatar" [src]="imgAvatar(titleData?.image)" style="object-fit: cover;">
+                </div>
+                <div class="name">
+                  {{titleData?.name}}
+                </div>
+              </div>
+              <i class="fas fa-chevron-right"></i>
+            </li>
+            <div class="row justify-content-center mt-4" *ngIf="showLoadMoreButton">
+                <div class="col-md-2 text-center">
+                  <button class="btn btn-primary" (click)="loadMoreItems()">Ver más</button>
+                </div>
+              </div>
+          </ul>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="titleData = ''">Cerrar</button>
+          <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="guardarCambios(titleData)">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- fin modal RS -->
+
+  <!-- pdf -->
+  <div class="container" [hidden]="true">
+    <div class="row">
+      <div #pdfContent>
+        <p>Información de punto de venta</p>
+        <table class="table table-bordered mt-4">
+          <tr class="table-primary">
+            <th>Sucursal</th>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Notas</th>
+            <th>Comercio</th>
+          </tr>
+          <tr >
+            <td>{{pdfItem?.branch?.name}}</td>
+            <td>{{pdfItem?.name}}</td>
+            <td>{{pdfItem?.status | translate}}</td>
+            <td>{{pdfItem?.notes}}</td>
+            <td>{{pdfItem?.store?.name}}</td>
+
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>

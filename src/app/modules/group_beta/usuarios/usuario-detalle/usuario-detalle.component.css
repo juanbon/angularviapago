@@ -1,0 +1,31 @@
+.position {
+        padding: 0 !important;
+        /* margin-top: 10px; */
+        /* left: 50px; */
+        /* position: absolute; */
+        z-index: 99;
+    
+}
+
+span {
+    font-size: 14px;
+}
+
+.title {
+    margin-top: 20px;
+}
+
+.position {
+    margin-top: 60px;
+}
+
+.card {
+    margin-top: 10px;
+}
+
+.back-button {
+    color: var(--primary);
+    left: 0px;
+    padding-left: 0px;
+}
+

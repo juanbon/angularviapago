@@ -1,0 +1,29 @@
+<h4 class="top">{{titulo | translate}}</h4>
+<div class="card " *ngIf="titulo == 'transactionsLogs'" >
+    <div class="card-body">
+      <div class="row" *ngFor="let item of items; let i = index" (click)="goTo(item)">
+        <div class="col-1">
+          <i class="bi bi-eye-fill"></i>
+        </div>
+        <div class="col">{{item?.createdAt | date: 'EEE d \'de\' MMMM \'de\' y HH:mm \'hs\''  }}</div>
+        <div class="col">{{item?.user?.name}}</div>
+        <div class="col">{{ item.initialStatus }} > {{item.finalStatus}}</div>
+        <div class="col">{{item?.context}} / {{item?.result}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card " *ngIf="titulo == 'transactionsWsLogs'" >
+    <div class="card-body">
+      <div class="row" *ngFor="let item of items; let i = index" (click)="goTo(item)">
+        <div class="col-1">
+          <i class="bi bi-eye-fill"></i>
+        </div>
+        <div class="col">{{item?.createdAt | date: 'EEE d \'de\' MMMM \'de\' y HH:mm \'hs\'' }}</div>
+        <!-- <div class="col">{{item?.user?.name}}</div> -->
+        <div class="col">{{ item?.type }}</div>
+        <div class="col">{{item?.context}}</div>
+      </div>
+    </div>
+  </div>
+  

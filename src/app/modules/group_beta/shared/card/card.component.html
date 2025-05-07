@@ -1,0 +1,20 @@
+<div class="card">
+    <div class="header">
+      <div class="avatar">
+        <img [src]="imgPerfil(avatar)" alt="Avatar" style="object-fit: cover;">
+      </div>
+      <h3 class="title">{{ title }}</h3>
+      <div *ngIf="headerLabelTop" class="header-label-top">{{headerLabelTop}}</div>
+    <br/>
+      <div *ngIf="headerLabelBottom" class="header-label-bottom">{{headerLabelBottom}}</div>
+      <button *ngIf="actionButton" class="action-button">
+        <img src="../../../../assets/icons/trash.svg">
+    </button>
+    </div>
+    <div class="content">
+      <p class="description">{{ description }}
+      <span class="text">{{ text }} </span></p>
+      <span class="label" *ngIf="label">{{ label }}</span>
+    </div>
+  </div>
+  

@@ -1,0 +1,30 @@
+<!--<div class="spinner" *ngIf="spinner">
+    <img src="./../../../../assets/img/loader.svg" alt="Cargando">
+  </div>-->
+<span *ngIf="require==='required'" class="required" >Requerido *</span>
+<div class="card" *ngIf="!spinner">
+    <div class="card-body">
+        <form [formGroup]="form">
+            <div >
+                <div class="row">
+                    <div *ngFor="let field of fields" class="col-xs-6 col-md-4 col-lg-3 col-{{ field.key }}">
+                        <div class="form-row content-center">
+                            <app-field [field]="field" [form]="form" [show]="!edit"></app-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="form-row group-actions" *ngIf="!spinner">
+    <button class="btn btn-danger rounded-pill buttom-cstm button-font-style cancel" [disabled]="!form.valid"
+        *ngIf="edit" (click)="closeDialog()">Volver</button>
+    <button (click)="onSubmit()" class="btn btn-primary rounded-pill buttom-cstm button-font-style accept"
+        [disabled]="!form.valid" *ngIf="edit">Guardar</button>
+    <button *ngIf="!edit" class="btn btn-danger rounded-pill buttom-cstm button-font-style accept"
+        [disabled]="!form.valid" (click)="closeDialog()">Volver</button>
+    <button style="background-color: #ffc107;border-color: #ffc107;color: black;font-weight: 500 !important;"  (click)="onLogs()" class="btn btn-primary rounded-pill buttom-cstm button-font-style accept"
+        [disabled]="!form.valid" *ngIf="!edit && logs">Ver Cambios...</button>
+
+</div>

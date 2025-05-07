@@ -1,0 +1,54 @@
+<div class="tables-container">
+    <div class="card card1">
+        <div class="card-body table-container" id="content">
+            <table class="table" id="table-download">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Grupo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let row of base">
+                        <tr>
+                            <td>{{ row.name }}</td>
+                            <td>{{ row.description }}</td>
+                            <td>
+                                <button class="button-simple" (click)="showGroup(row.id)">
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card card2">
+        <div class="card-body table-container" id="content">
+            <table class="table" id="table-download">
+                <thead>
+                    <tr>
+                        <th scope="col">Grupo</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Ver</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let row of subgroup">
+                        <tr>
+                            <td>{{ row.name }}</td>
+                            <td>{{ row.description }}</td>
+                            <td>
+                                <button class="button-simple" (click)="showReport()">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

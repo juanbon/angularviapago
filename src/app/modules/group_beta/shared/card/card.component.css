@@ -1,0 +1,82 @@
+.card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    min-height: 125px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+  }
+  
+  .avatar img {
+    background-color: #E5E5E5;
+    width: 36px;
+    height: 36px;
+    margin-right: 10px;
+  }
+  
+  .title {
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  .action-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-left: auto;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+  }
+  
+
+  .action-button  img{
+   height: 20px;
+  }
+
+  .action-button:hover {
+    height: 40px;
+    width: 40px;
+    background-color: #E5E5E5;
+  }
+
+  
+  .description {
+    margin-bottom: 5px;
+    color: #737373;
+    font-size: 12px;
+  }
+  
+  .text {
+    margin-bottom: 10px;
+    color: #eb445a;
+    font-size: 12px;
+  }
+  
+  .header-label-top {
+    color: #eb445a;
+    margin: 0px;
+    align-self: flex-start;
+    font-size: 11px;
+  }
+  .header-label-bottom {
+    color: #000000;
+    margin: 0px;
+    align-self: flex-start;
+    font-size: 10px;
+  }
+
+  .label {
+    padding: 5px 10px;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 5px;
+  }
+  

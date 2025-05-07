@@ -1,0 +1,274 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+ng-select {
+  width: 120px;
+}
+.ng-select.ng-select-single .ng-select-container {
+  height: 31px;
+}
+app-feetaxconfigs ng-select.status {
+  margin-top: 15px;
+}
+
+.col-cardReplacementAmount input{
+  margin-top: 15px !important;
+}
+
+.ng-select .ng-select-container {
+  min-height: 31px;
+  padding-left: 10px !important; 
+}
+
+.ng-select.ng-touched .ng-select-container .ng-value{
+  margin-top: 10px;
+}
+
+.ng-clear-wrapper {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .col-sourceTax{
+    max-width: 24%;
+    margin-left: 10px;
+  }
+  
+  .col-targetTax{
+    max-width: 24%;
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .col-sourceTax{
+    width: 75%;
+    margin-left: 40px;
+  }
+  
+  .col-targetTax{
+    width: 75%;
+    margin-left: 40px;
+  }
+}
+
+.btn-outline-success {
+  color: #c12525 !important;
+  background-color: transparent;
+  background-image: none;
+  border-color: #fd5e1f96 !important;
+}
+
+
+.edit-buttom {
+  color: #c12525 !important;
+  border-color: #ff0b0b87 !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+ /*   background-color: #f25318;   */
+}
+
+body.logged-in {
+  background-color: #eaeaea61; /* o el color que quieras cuando está logueado */
+}
+
+body.logged-out {
+  background-color: #eaeaea61; /* color por defecto */
+}
+
+.mat-dialog-container {
+  padding: 0px !important;
+}
+
+.date_header {
+  width: 240px !important;
+  /* padding-left: 20px !important; */
+}
+
+.date_header_input {
+  padding-left: 6px !important;
+}
+
+.date_header_matSuffix {
+  position: absolute !important;
+  top: -4px !important;
+  left: 190px !important;
+}
+
+.date_form {
+  top: -27px !important ;
+}
+
+.date_form_input {
+  line-height: 20px !important;
+  top: 6px !important;
+  position: relative;
+}
+
+.date_form_matSuffix {
+  position: absolute !important;
+  top: 0px !important;
+  left: 135px !important;
+}
+
+.loadings {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.024);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999999;
+}
+
+.loadings .spinner-border {
+  position: fixed;
+  width: 3rem;
+  height: 3rem;
+  color: #525252;
+}
+
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: white;
+}
+
+.back-button i {
+  margin-right: 5px;
+}
+
+.card {
+  margin-top: 50px;
+}
+
+input,
+textarea {
+  border: none;
+}
+
+label {
+  font-size: 12px;
+}
+
+.recuadro {
+  padding-top: 10px;
+  /* border-radius: 10px;
+    border: 1px solid #e9ecef; */
+}
+
+h5 {
+  margin: 10px;
+}
+
+/* .fondo:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .fondoDos:nth-child(even) {
+    background-color: #f2f2f2;
+  } */
+
+.margen-top {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-top: 1px solid #e8e6e6;
+}
+
+.text-weight {
+  font-weight: 300;
+}
+
+.status-pending {
+  font-weight: bold;
+  color: red;
+}
+
+.status-disable {
+  font-weight: bold;
+  color: red;
+}
+
+.status-enable {
+  font-weight: bold;
+  color: green;
+}
+
+.fondoCuit {
+  background-color: #e9ecef;
+}
+
+.img-perfil {
+  /* background-color: #E5E5E5; */
+  width: 0%;
+  /* height: 136px; */
+}
+
+.img-perfil img {
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 220px;
+  height: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.camara-boton {
+  position: absolute;
+  top: 380px;
+  left: 105px;
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+  z-index: 999;
+}
+
+.file-input {
+  display: none;
+}
+
+.cdk-overlay-container {
+  z-index: 999999999 !important; /* Ajusta el valor del z-index según tus necesidades */
+  /* Agrega otros estilos personalizados según sea necesario */
+}
+
+.no-padding {
+  padding: 0px;
+}
+
+.no-margin {
+  margin: 0px;
+}
+
+.no-left-margin {
+  margin-left: 0 !important;
+}
+
+.no-right-margin {
+  margin-right: 0 !important;
+}
+
+
+
+.multiselect-dropdown .dropdown-btn .selected-item-container .selected-item{
+  max-width:none !important;
+  margin: 1px;
+}
+
+.col-userId {
+  flex: 0 0 50%!important;
+  max-width: 50%!important;
+}
