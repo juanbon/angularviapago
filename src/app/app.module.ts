@@ -1,4 +1,5 @@
 /* @angular */
+import { NgSelectModule } from '@ng-select/ng-select';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -60,7 +61,8 @@ registerLocaleData(localeEs);
     FormsModule,
     AuthorizationModule,
     ListaPageModule,
-    NgIdleKeepaliveModule.forRoot() // use NgIdleModule.forRoot() if not using keepalive
+    NgIdleKeepaliveModule.forRoot(), // use NgIdleModule.forRoot() if not using keepalive
+    NgSelectModule
   ],
   exports: [
     TranslateModule

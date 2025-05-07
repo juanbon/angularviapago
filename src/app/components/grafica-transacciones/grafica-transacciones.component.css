@@ -9,3 +9,69 @@
     height: 100%;
   }
   
+
+
+  .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .filtros label {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+    color: #333;
+    min-width: 160px;
+  }
+  
+  .filtros input,
+  .filtros select {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-top: 0.25rem;
+    background-color: #fff;
+    width: 100%;
+  }
+  
+  .filtros select[multiple] {
+    height: 120px;
+  }
+
+
+  ::ng-deep ng-select {
+    width: 100%;
+    margin-top: 5px;
+  }
+  
+  ::ng-deep .ng-select .ng-value {
+    background-color: #e0f7fa;
+    border-radius: 12px;
+    padding: 3px 10px;
+    margin: 2px;
+    font-size: 0.85rem;
+  }
+  
+  
+  .filtros button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .filtros button:hover {
+    background-color: #0056b3;
+  }
+  

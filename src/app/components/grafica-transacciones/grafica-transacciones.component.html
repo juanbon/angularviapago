@@ -1,13 +1,45 @@
-<ngx-charts-bar-vertical-2d
-  [view]="view"
-  [scheme]="colorScheme"
-  [results]="chartData"
-  [gradient]="false"
-  [xAxis]="true"
-  [yAxis]="true"
-  [legend]="showLegend"
-  [showDataLabel]="showLabels"
-  [xAxisLabel]="'Fecha'"
-  [yAxisLabel]="'Monto Total'">
-</ngx-charts-bar-vertical-2d>
+<div class="filtros">
+  <label>
+    Desde:
+    <input type="date" [(ngModel)]="fromDate" (change)="actualizarRangoToDate()" [max]="maxFromDate" />
+  </label>
 
+  <label>
+    Hasta:
+    <input type="date" [(ngModel)]="toDate" [min]="minToDate" [max]="maxToDate" />
+  </label>
+
+  <label>
+    Tipos:
+    <ng-select
+    [items]="tiposDisponibles"
+    bindLabel="value"
+    bindValue="key"
+    [(ngModel)]="selectedTipos"
+    [multiple]="true"
+    [closeOnSelect]="false"
+    placeholder="Selecciona tipos de transacción"
+    [searchable]="true">
+  </ng-select>
+  
+  </label>
+
+  <button (click)="filtrar()">Filtrar</button>
+</div>
+
+  
+  
+  <ngx-charts-bar-vertical-2d
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="chartData"
+    [gradient]="false"
+    [barPadding]="0" 
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="showLegend"
+    [showDataLabel]="showLabels"
+    [xAxisLabel]="'Fecha'"
+    [yAxisLabel]="'Monto Total'">
+  </ngx-charts-bar-vertical-2d>
+  

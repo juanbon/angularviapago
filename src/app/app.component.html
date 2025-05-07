@@ -1,5 +1,37 @@
+
+
+
+
 <div [hidden]="!loadingService.isLoading" class="loadings">
-  <img src="./../../../../assets/img/loading.gif" alt="Cargando">
+  <svg
+  width="160"
+  height="160"
+  viewBox="0 0 50 50"
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  >
+  <circle
+    cx="25"
+    cy="25"
+    r="20"
+    stroke="#f25318"
+    stroke-opacity="0.5"
+    stroke-width="5"
+    stroke-linecap="round"
+    stroke-dasharray="100"
+    stroke-dashoffset="75"
+  >
+    <animateTransform
+      attributeName="transform"
+      type="rotate"
+      from="0 25 25"
+      to="360 25 25"
+      dur="1s"
+      repeatCount="indefinite"
+    />
+  </circle>
+  </svg>
+
 </div>
 
 <div *ngIf="mostrarMenu">
