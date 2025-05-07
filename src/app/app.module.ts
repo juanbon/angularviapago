@@ -27,6 +27,7 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // use import {NgIdl
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GraficaTransaccionesComponent } from './components/grafica-transacciones/grafica-transacciones.component';
 
+
 // Función para cargar los archivos de traducción
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');

@@ -272,3 +272,29 @@ h5 {
   flex: 0 0 50%!important;
   max-width: 50%!important;
 }
+
+
+/* Elimina el cursor de mano en la leyenda */
+.chart-legend .legend-label {
+  cursor: default !important;
+}
+
+/* Cambia el color del texto de la leyenda a negro */
+ngx-charts .legend-label-text {
+  color: black !important;
+}
+
+/* Usa ::ng-deep para aplicar los estilos a los elementos dentro de ngx-charts */
+::ng-deep ngx-charts .legend-label {
+  cursor: default !important;
+}
+
+/* Cambia el color del texto de la leyenda a negro */
+.chart-legend .legend-label-text {
+  color: #212529 !important;
+}
+
+
+ngx-charts-pie-chart .chart-legend {
+  display: none !important;
+}

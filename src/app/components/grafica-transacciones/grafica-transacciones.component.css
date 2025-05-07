@@ -10,6 +10,28 @@
   }
   
 
+/* Elimina el cursor de mano en la leyenda */
+ngx-charts .legend-label {
+  cursor: default !important;
+}
+
+/* Cambia el color del texto de la leyenda a negro */
+ngx-charts .legend-label-text {
+  color: black !important;
+}
+
+/* Usa ::ng-deep para aplicar los estilos a los elementos dentro de ngx-charts */
+::ng-deep ngx-charts .legend-label {
+  cursor: default !important;
+}
+
+/* Cambia el color del texto de la leyenda a negro */
+::ng-deep ngx-charts .legend-label-text {
+  color: black !important;
+}
+
+
+
 
   .filtros {
     display: flex;

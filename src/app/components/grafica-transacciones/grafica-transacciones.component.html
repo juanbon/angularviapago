@@ -9,6 +9,9 @@
     <input type="date" [(ngModel)]="toDate" [min]="minToDate" [max]="maxToDate" />
   </label>
 
+
+<!-- 
+
   <label>
     Tipos:
     <ng-select
@@ -22,24 +25,39 @@
     [searchable]="true">
   </ng-select>
   
+
   </label>
+
+--> 
+
+
 
   <button (click)="filtrar()">Filtrar</button>
 </div>
 
   
-  
-  <ngx-charts-bar-vertical-2d
-    [view]="view"
-    [scheme]="colorScheme"
-    [results]="chartData"
-    [gradient]="false"
-    [barPadding]="0" 
-    [xAxis]="true"
-    [yAxis]="true"
-    [legend]="showLegend"
-    [showDataLabel]="showLabels"
-    [xAxisLabel]="'Fecha'"
-    [yAxisLabel]="'Monto Total'">
-  </ngx-charts-bar-vertical-2d>
-  
+<ngx-charts-bar-vertical-2d
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="chartData"
+  [gradient]="false"
+  [barPadding]="0" 
+  [xAxis]="true"
+  [yAxis]="true"
+  [legend]="showLegend"
+  [showDataLabel]="showLabels"
+  [xAxisLabel]="'Fecha'"
+  [yAxisLabel]="'Monto Total'"
+  (legendLabelClick)="onLegendLabelClick($event)">
+</ngx-charts-bar-vertical-2d>
+
+
+<ngx-charts-pie-chart
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="pieChartData"
+  [legend]="showLegend"
+  [labels]="true"
+  [doughnut]="false"
+  [legendPosition]="legendPosition">
+</ngx-charts-pie-chart>
