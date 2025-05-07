@@ -298,3 +298,30 @@ ngx-charts .legend-label-text {
 ngx-charts-pie-chart .chart-legend {
   display: none !important;
 }
+
+/* Contenedor de las dos gráficas (pie charts) */
+.charts-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Espacio entre las gráficas */
+  flex-wrap: wrap; /* En pantallas pequeñas se puede acomodar de forma vertical */
+}
+
+/* Contenedor de cada gráfico de torta */
+.pie-chart-container {
+  width: 48%; /* Dos gráficos ocupando la mitad del espacio cada uno */
+  text-align: center; /* Centra el texto */
+}
+
+/* Título principal */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Subtítulos */
+h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}

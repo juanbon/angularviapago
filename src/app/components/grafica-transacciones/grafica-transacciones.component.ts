@@ -20,14 +20,16 @@ export class GraficaTransaccionesComponent implements OnInit {
 
   legendPosition = LegendPosition.Right;
 
-  
+  chartDataByStatus: any[] = [];
+
+
   colorScheme: Color = {
     name: 'myScheme',
     selectable: true,
     group: ScaleType.Ordinal,
     domain: [
       '#FF5733', // Rojo
-      '#FF8C00', // Naranja
+      '#808080', // Gris (reemplazado el naranja)
       '#1E90FF', // Azul
       '#32CD32', // Verde
       '#8A2BE2', // Violeta
@@ -35,7 +37,8 @@ export class GraficaTransaccionesComponent implements OnInit {
       '#FF1493', // Rosa fuerte
       '#00CED1', // Turquesa
       '#8B4513', // Marrón
-      '#800080'  // Púrpura
+      '#800080',  // Púrpura
+       '#39FF14'
     ]
   };
 
@@ -57,6 +60,23 @@ export class GraficaTransaccionesComponent implements OnInit {
   minToDate: string = '';
   maxToDate: string = '';
   maxFromDate: string = '';
+
+
+  procesarDatosPorStatus(transacciones: any[]) {
+    const dataGroupedByStatus = transacciones.reduce((acc, { status, total }) => {
+      if (!acc[status]) acc[status] = 0;
+      acc[status] += total; // Sumar el total de transacciones por estado
+      return acc;
+    }, {} as Record<string, number>);
+  
+    // Asignamos los resultados procesados para el gráfico de torta por estado
+    this.chartDataByStatus = Object.entries(dataGroupedByStatus).map(([status, totalAmount]) => ({
+      name: status,  // 'name' será el 'status' como 'confirm', 'cancel', etc.
+      value: totalAmount // El valor es la cantidad total de transacciones para ese estado
+    }));
+  }
+  
+
 
   actualizarRangoToDate() {
     if (!this.fromDate) return;
@@ -95,22 +115,24 @@ export class GraficaTransaccionesComponent implements OnInit {
 
   filtrar() {
     if (!this.fromDate || !this.toDate) return;
-
+  
     const allTypesSelected = this.selectedTipos.length === 0;
-
+  
     const params: any = {
       from: this.fromDate,
       to: this.toDate
     };
-
+  
     if (!allTypesSelected) {
       params.types = this.selectedTipos;
     }
-
+  
     this.transaccionService.getTransacciones(params).subscribe(data => {
-      this.procesarDatos(data);
+      this.procesarDatos(data); // Para el gráfico de barras por tipo
+      this.procesarDatosPorStatus(data); // Para el gráfico de torta por estado
     });
   }
+  
 
   onLegendLabelClick(event: any): void {
     console.log('Hiciste clic en la leyenda:', event);

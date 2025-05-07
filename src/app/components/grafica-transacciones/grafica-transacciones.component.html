@@ -1,3 +1,8 @@
+
+<!-- Título principal -->
+<h2 style="font-size: 24px; font-family: Arial, sans-serif; color: #333; text-align: left; margin-bottom: 20px;">Transacciones por periodo de fechas</h2>
+
+
 <div class="filtros">
   <label>
     Desde:
@@ -9,39 +14,49 @@
     <input type="date" [(ngModel)]="toDate" [min]="minToDate" [max]="maxToDate" />
   </label>
 
-
-<!-- 
-
-  <label>
-    Tipos:
-    <ng-select
-    [items]="tiposDisponibles"
-    bindLabel="value"
-    bindValue="key"
-    [(ngModel)]="selectedTipos"
-    [multiple]="true"
-    [closeOnSelect]="false"
-    placeholder="Selecciona tipos de transacción"
-    [searchable]="true">
-  </ng-select>
-  
-
-  </label>
-
---> 
-
-
-
   <button (click)="filtrar()">Filtrar</button>
 </div>
 
-  
+
+<!-- Contenedor de las dos gráficas -->
+<div class="charts-container" style="margin-top: 20px;margin-left: -239px !important;">
+  <!-- Primer gráfico de torta con subtítulo -->
+  <div class="pie-chart-container">
+    <h3 style="font-size: 18px; font-family: Arial, sans-serif; color: #333; margin-bottom: 10px;">Tipos de transacciones</h3>
+
+    <ngx-charts-pie-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="pieChartData"
+      [legend]="showLegend"
+      [labels]="true"
+      [doughnut]="false"
+      [legendPosition]="legendPosition">
+    </ngx-charts-pie-chart>
+  </div>
+
+  <!-- Segundo gráfico de torta con subtítulo -->
+  <div class="pie-chart-container">
+    <h3 style="font-size: 18px; font-family: Arial, sans-serif; color: #333; margin-bottom: 10px;">Estado de las transacciones</h3>
+    
+    <ngx-charts-pie-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="chartDataByStatus"
+      [legend]="true"
+      [labels]="true"
+      [doughnut]="false">
+    </ngx-charts-pie-chart>
+  </div>
+</div>
+
+<!-- Gráfico de barras (si es necesario) -->
 <ngx-charts-bar-vertical-2d
   [view]="view"
   [scheme]="colorScheme"
   [results]="chartData"
   [gradient]="false"
-  [barPadding]="0" 
+  [barPadding]="0"
   [xAxis]="true"
   [yAxis]="true"
   [legend]="showLegend"
@@ -50,14 +65,3 @@
   [yAxisLabel]="'Monto Total'"
   (legendLabelClick)="onLegendLabelClick($event)">
 </ngx-charts-bar-vertical-2d>
-
-
-<ngx-charts-pie-chart
-  [view]="view"
-  [scheme]="colorScheme"
-  [results]="pieChartData"
-  [legend]="showLegend"
-  [labels]="true"
-  [doughnut]="false"
-  [legendPosition]="legendPosition">
-</ngx-charts-pie-chart>
