@@ -59,32 +59,12 @@
       </table>
     </div>
   </div>
-  <div *ngIf="paginated && totalPages > 0" class="pagination">
-    <div class="pages">Total de páginas: {{totalPages}}</div>
-    <div class="input-group input-page">
-      <button class="btn btn-outline-secondary" type="button" (click)="change()">
-        <i class="bi bi-arrow-right-square"></i>
-      </button>
-      <input type="number" class="form-control" id="page">
-    </div>
-    <nav>
-      <ul class="pagination">
-        <li class="page-item" (click)="first()" *ngIf="currentPage != 1">
-          <a class="page-link"><i class="bi bi-chevron-double-left"></i></a>
-        </li>
-        <li class="page-item" (click)="prev()" *ngIf="currentPage != 1">
-          <a class="page-link"><i class="bi bi-arrow-left"></i></a>
-        </li>
-        <li class="page-item">
-          <a class="page-link">{{currentPage}} <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="page-item" (click)="next()" *ngIf="currentPage != totalPages">
-          <a class="page-link"><i class="bi bi-arrow-right"></i></a>
-        </li>
-        <li class="page-item" (click)="last()" *ngIf="currentPage != totalPages">
-          <a class="page-link"><i class="bi bi-chevron-double-right"></i></a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+  <mat-paginator
+  *ngIf="paginated"
+  [length]="totalItems"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[5, 10, 25, 50]"
+  (page)="onPageChange($event)">
+</mat-paginator>
+
 </div>

@@ -3,12 +3,13 @@ import { FormTemplate, ACTION_FORM } from "src/app/modules/group_beta/dynamic/dy
 //URLs
 let urls =
 {
-    search: 'viapago/Transacciones/search',
+    search: 'reportetransacciones',
     get: '',
     post: '',
     put: '',
     delete: ''
 };
+
 
 //BUSCADOR
 let filters = [
@@ -77,7 +78,7 @@ const Config = {
     saveForm: new FormTemplate(JSON.parse(JSON.stringify(postFields)), "",
         ACTION_FORM.SAVE, urls.post, ''),
      paginated:true,
-     usaApiBoletos: true,
+     usaApiBoletos: false, // true
      allPagesReport: true,
 }
 

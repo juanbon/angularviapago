@@ -8,6 +8,7 @@ import { SnackBarService } from 'src/app/modules/group_beta/presentation/service
 import { FilterDataService } from 'src/app/modules/group_beta/dynamic/dynamic-table/service/filter-data.service';
 import { ConfirmComponentComponent } from 'src/app/modules/group_beta/dynamic/dynamic-table/confirm-component/confirm-component.component';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-table',
@@ -15,6 +16,9 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit, OnDestroy {
+
+
+
 
   @Input()
   title!: string;
@@ -78,7 +82,12 @@ export class TableComponent implements OnInit, OnDestroy {
 
   booleans: Array<string> = [];
 
-  currentPage = 1;
+
+  totalItems = 0;
+  pageSize = 50;
+  currentPage = 0;
+
+  //currentPage = 1;
   totalPages = 0;
   page = 1;
   fields: any[] = [];
@@ -87,6 +96,13 @@ export class TableComponent implements OnInit, OnDestroy {
     this.headerTitle = this.title;
     this.loadTable(this.filterData);
   }
+
+  onPageChange(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.loadTable(this.filterData);
+  }
+  
 
   newData = (args: any): void => {
     this.config = this.save;
@@ -144,94 +160,110 @@ export class TableComponent implements OnInit, OnDestroy {
     this.filterSubscribe$.unsubscribe();
   }
 
+ 
+
+
+
   loadTable(message: any[]): void {
     this.spinner = true;
-    let url = this.getUrlUpdated(message, false);
-    this.abstractService.get(url , this.usaApiBoletos).subscribe(
-      (data) => {
-
-
-  if(data.length>0){
-
-        this.spinner = false;
-        this.items = data;
-        let columns: any = [];
-        let searchBlackList: Array<any> = ['TotalPages','Page'];
-        let booleans: Array<string> = [];
-
-        this.fields.forEach(function(e){
-          if(e.type === 'bool') {
-            booleans.push(e.key);
+    const url = this.getUrlUpdated(message, false);
+  
+    this.abstractService.get(url, this.usaApiBoletos).subscribe({
+      next: (data) => {
+        const items = Array.isArray(data) ? data : data.data;
+        this.items = items;
+  
+        if (!items || items.length === 0) {
+          this.snackBarService.showError('No se encontraron resultados');
+          this.spinner = false;
+          return;
+        }
+  
+        // Procesar columnas
+        const columns: any[] = [];
+        const searchBlackList = ['TotalPages', 'Page'];
+        const booleans: string[] = [];
+  
+        this.fields.forEach((field) => {
+          if (field.type === 'bool') {
+            booleans.push(field.key);
           }
-          if (e.notShow instanceof Array) {
-            const index = e.notShow.indexOf('search');
-            if (index > -1) {
-              searchBlackList.push(e.key);
-            }
-          }
-        });
-
-        let columns_black_list: Array<any> = searchBlackList;
-        let fields = this.fields;
-
-        Object.keys(data[0]).forEach(function(e)
-        {
-          let label:string = e
-          fields.forEach(function(f){
-            if(f.key === e){
-                label = f.label
-            }
-          })
-          let dato = e
-          let header
-          const index = columns_black_list.indexOf(e);
-          if (index < 0) {
-            header = dato === 'enable'?true : dato === 'disable' ? false: dato
-            let columnKey = {key: header, text: label};
-            columns.push(columnKey);
+          if (Array.isArray(field.notShow) && field.notShow.includes('search')) {
+            searchBlackList.push(field.key);
           }
         });
-
+  
+        Object.keys(items[0]).forEach((key) => {
+          if (!searchBlackList.includes(key)) {
+            let label = key;
+            this.fields.forEach((f) => {
+              if (f.key === key) {
+                label = f.label;
+              }
+            });
+            const displayKey = key === 'enable' ? true : key === 'disable' ? false : key;
+            columns.push({ key: displayKey, text: label });
+          }
+        });
+  
         this.columns = columns;
         this.booleans = booleans;
-
-
-        if(this.items.length>=this.maxItemsValue){
-
-          this.showMaxItems = false;
-
-        }else{
-
-        this.showMaxItems = true;
-
+  
+        this.showMaxItems = this.items.length < this.maxItemsValue;
+  
+        // Manejo de paginación
+        if (this.paginated) {
+          if (data.TotalPages) {
+            this.totalPages = data.TotalPages;
+          } else if (data.last_page) {
+            this.totalPages = data.last_page;
+          } else {
+            this.totalPages = 1; // fallback por si no viene nada
+          }
         }
-
-        if (this.paginated && this.items.length > 0) this.totalPages = this.items[0].TotalPages;
-
-            }else{
-
-         this.snackBarService.showError('No se encontraron resultados');
-
-      }
-
-
-
-        
-      },
-      (error) => {
-       this.snackBarService.showError(error.error.message_detail?error.error.message_detail:error.error.message);
+  
+        this.totalItems = data.total ?? items.length;
         this.spinner = false;
-        if (error.status == 404) {
-          this.items = [];
-          this.snackBarService.showError(error.error.message_detail?error.error.message_detail:error.error.message);
+      },
+      error: (error) => {
+        this.spinner = false;
+        this.items = [];
+  
+        const message =
+          error.error?.message_detail || error.error?.message || 'Error desconocido';
+        this.snackBarService.showError(message);
+  
+        if (error.status === 404) {
+          this.snackBarService.showError(message);
         }
-      }
-    );
+      },
+    });
   }
+  
+        
+
+
+  getUrlUpdated(message: any[], allPages: boolean) {
+    let params = '';
+  
+    message?.forEach(f => {
+      params += `${f.key}=${f.value}&`;
+    });
+  
+    if (allPages) {
+      params += 'Page=-1&';
+    } else {
+      params += `Page=${this.currentPage + 1}&PageSize=${this.pageSize}&`;
+    }
+  
+    return this.validateURL(`${this.urlSearch}?${params.slice(0, -1)}`);
+  }
+  
+  /*
 
   getUrlUpdated(message: any[], allPages: boolean) {
     let url = '';
-    if (message != undefined/* && message != []*/) {
+    if (message != undefined && message != []) {
       let filter = "";
       message.forEach(element => {
         filter = filter + element.key + '=' + element.value + '&';
@@ -249,6 +281,8 @@ export class TableComponent implements OnInit, OnDestroy {
       return url;
     }
   }
+
+  */
 
   validateURL(url: string) {
     const index = url.lastIndexOf("?");

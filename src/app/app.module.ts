@@ -26,6 +26,8 @@ import { SideMenuComponent } from './modules/group_beta/shared/side-menu/side-me
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // use import {NgIdleModule} from '@ng-idle/core'; if not using keepalive
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GraficaTransaccionesComponent } from './components/grafica-transacciones/grafica-transacciones.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 
 
 // Función para cargar los archivos de traducción
@@ -51,6 +53,7 @@ registerLocaleData(localeEs);
     NgxChartsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MatPaginatorModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

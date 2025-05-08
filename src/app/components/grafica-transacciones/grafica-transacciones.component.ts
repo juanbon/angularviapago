@@ -77,6 +77,12 @@ export class GraficaTransaccionesComponent implements OnInit {
   }
   
 
+  labelFormatting(c: any): string {
+
+
+  
+    return `${c}`; // Solo muestra el texto completo sin cortar
+  }
 
   actualizarRangoToDate() {
     if (!this.fromDate) return;
@@ -106,7 +112,7 @@ export class GraficaTransaccionesComponent implements OnInit {
 
   cargarTipos() {
     this.transaccionService.getTipos().subscribe((tipos: any[]) => {
-      console.log(tipos);  // Verifica lo que se recibe del servidor
+      // console.log(tipos);  // Verifica lo que se recibe del servidor
       this.tiposDisponibles = tipos;
       this.selectedTipos = [];
       this.filtrar();
@@ -135,7 +141,7 @@ export class GraficaTransaccionesComponent implements OnInit {
   
 
   onLegendLabelClick(event: any): void {
-    console.log('Hiciste clic en la leyenda:', event);
+    // console.log('Hiciste clic en la leyenda:', event);
 
     const clickedType = event.name;
 
@@ -145,7 +151,7 @@ export class GraficaTransaccionesComponent implements OnInit {
       this.selectedTipos.push(clickedType);
     }
 
-    console.log('Tipos seleccionados:', this.selectedTipos);
+    // console.log('Tipos seleccionados:', this.selectedTipos);
 
     this.filtrar();
   }
