@@ -82,7 +82,8 @@ clearDependences() {
           this.field.options = [];
 
             data.forEach((element: any) => {
-              this.field.options.push({ key: element[Object.keys(element)[0]], value: element[Object.keys(element)[0]] + ' - ' + element[Object.keys(element)[1]]});
+             // this.field.options.push({ key: element[Object.keys(element)[0]], value: element[Object.keys(element)[0]] + ' - ' + element[Object.keys(element)[1]]});
+             this.field.options.push({ key: element[Object.keys(element)[1]], value: element[Object.keys(element)[3]] });
             });
 
             this.children = this.field.options; 
@@ -101,7 +102,9 @@ clearDependences() {
           this.field.options = [];
 
             data.forEach((element: any) => {
-              this.field.options.push({ key: element[Object.keys(element)[0]], value: element[Object.keys(element)[0]] + ' - ' + element[Object.keys(element)[1]]});
+             // this.field.options.push({ key: element[Object.keys(element)[0]], value: element[Object.keys(element)[0]] + ' - ' + element[Object.keys(element)[1]]});
+           
+             this.field.options.push({ key: element[Object.keys(element)[1]], value: element[Object.keys(element)[2]] + " ("+element[Object.keys(element)[1]]+")" });
             });
 
             this.children = this.field.options; 

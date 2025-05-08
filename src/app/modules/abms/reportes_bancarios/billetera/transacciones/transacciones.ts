@@ -46,6 +46,13 @@ let filters = [
         url: null,
         data: null,
         value: null
+    },{
+        key: 'TypeTransaction',
+        label: 'Tipo Transaction',
+        type: 'select',
+        url: 'transacciones/tipos',
+        data: null,
+        value: null
     },
 ];
 

@@ -325,3 +325,19 @@ h3 {
   font-size: 18px;
   color: #333;
 }
+
+
+.inputs[_ngcontent-ng-c3958362610] {
+
+  margin-bottom: 53px !important;
+}
+
+.filter-item[_ngcontent-ng-c3576617092] {
+  background: #ffffff !important;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #ffffff !important;
+}

@@ -1,68 +1,34 @@
 <div *ngIf="!sinType">
-<div class="card position-relative" *ngIf="short">
-  <div (click)="closeDialog('get', item.id)">
-  <div class="header">
-  <div *ngFor="let type of types" >
-    <div class="row">
-      <div class="col-12 ">
-      <h3 class="title" *ngIf="type.isTitle">{{ item[type.key] | customFormat | translate }}</h3>
-      <div *ngIf="type.headerTop" class="header-label-top">{{ item[type.key] | customFormat | translate }}</div>
-    <br/>
-      <div *ngIf="type.labelBottom" class="header-label-bottom">{{ item[type.key] | customFormat | translate }}</div>
-
-      </div>
-      </div>
-      </div>
-
-      </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-12" *ngFor="let type of types">
-      <p class="description text-left" *ngIf="type.description">{{ item[type.key]?.[type.child] || item[type.key] | customFormat | translate }}</p>
-      <span class="text" *ngIf="type.isText">{{ item[type.key] | customFormat | translate }}</span>
-      <span class="label" *ngIf="type.isLabel">{{ item[type.key] | customFormat | translate }}</span>
-    </div>
-    </div>
-    </div>
-  </div>
-  <div class="position-absolute top-0 end-0">
-  <button *ngIf="showDelete" class="action-button" (click)="closeDialog('delete', item.id)">
-    <img src="../../../../assets/icons/trash.svg">
-</button>
-</div>
-    </div>
-
-<div class="card" *ngIf="!short">
-  <div class="row">
-    <div class="col-md-10">
-      <div class="content text-justify">
-        <div *ngFor="let type of types" [ngClass]="getClassForValue(item[type.key])">
-          <span class="label sin-fondo" *ngIf="type.key && type.type !== 'price' && type.type !== 'top-right' && type.type !== 'hidden' && type.type !== 'dateshort'" >{{ trimLabel(type.label) != ''?type.label:type.key | customFormat | translate }}:</span>
-          <span *ngIf="type.type !== 'price' && type.type !== 'top-right' && type.type !== 'hidden' && type.type !== 'dateshort'" >
-          {{ item[type.key] !== 0 ? (item[type.key] | customFormat | translate ) : '0' }}</span>
-          <span class="ago" *ngIf="type.type !== 'price' && type.type !== 'top-right' && type.type !== 'hidden' && type.type == 'dateshort'" >
-            {{ item[type.key] | amTimeAgo | titlecase}}</span>
+  <div class="card position-relative" *ngIf="short">
+    <div (click)="closeDialog('get', item.id)">
+      <div class="header">
+        <div *ngFor="let type of types">
+          <div class="row">
+            <div class="col-12">
+              <h3 class="title" *ngIf="type.isTitle">{{ item[type.key] | customFormat | translate }}</h3>
+              <div *ngIf="type.headerTop" class="header-label-top">{{ item[type.key] | customFormat | translate }}</div>
+              <br/>
+              <div *ngIf="type.labelBottom" class="header-label-bottom">{{ item[type.key] | customFormat | translate }}</div>
+            </div>
+          </div>
         </div>
-        <br/>
-
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12" *ngFor="let type of types">
+            <p class="description text-left" *ngIf="type.description">{{ item[type.key]?.[type.child] || item[type.key] | customFormat | translate }}</p>
+            <span class="text" *ngIf="type.isText">{{ item[type.key] | customFormat | translate }}</span>
+            <span class="label" *ngIf="type.isLabel">{{ item[type.key] | customFormat | translate }}</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-md-2 text-right">
-      <div *ngFor="let type of types" [ngClass]="{font: type.type === 'price'}">
-        <span *ngIf="type.type == 'price' || type.type == 'top-right'" >$
-          {{ item[type.key] !== null && item[type.key] !== 0 ? (item[type.key] | customFormat | translate | number: '1.2-2') : '0' }}
-        </span>
-      </div>
+    <div class="position-absolute top-0 end-0">
       <button *ngIf="showDelete" class="action-button" (click)="closeDialog('delete', item.id)">
-        <img src="../../../../assets/icons/trash.svg">
+        <img src="../../../../assets/icons/trash.svg" alt="Delete">
       </button>
-      <button *ngIf="showGet" class="action-button" (click)="closeDialog('get', item.id)">
-        <i class="fas fa-eye"></i>
-      </button>
-
     </div>
   </div>
-</div>
 </div>
 
 <div *ngIf="sinType">
@@ -71,56 +37,156 @@
       <div class="col-md-9">
         <div class="content text-justify">
           <div>
-           <span>
-            {{ item?.details?.posted | customFormat | date: 'EEE d \'de\' MMMM \'de\' y HH:mm \'hs\'' }}
-           </span>
+            <span>
+              {{ item?.details?.posted | customFormat | date: 'EEE d \'de\' MMMM \'de\' y HH:mm \'hs\'' }}
+            </span>
           </div>
           <br/>
-
         </div>
       </div>
       <div class="col-md-3 text-right">
-        <div >
-          <span *ngIf="item?.details.value.currency == 'ARS'" >$</span>
-          <span>
-          {{ item?.details.value?.amount  }}
-          </span>
+        <div>
+          <span *ngIf="item?.details.value.currency == 'ARS'">$</span>
+          <span>{{ item?.details.value?.amount }}</span>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-10">
         <span>{{ item?.details?.type | customFormat | translate }}</span>
-        </div>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-10">
         <span>ID: {{ item?.id }}</span>
-        </div>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-10">
         <span>REF {{ item?.details?.reference_number }}</span>
-        </div>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-10">
         <span>Origen: {{ item?.counterparty?.id }} - {{ item?.counterparty?.name }} - {{ item?.counterparty?.account_routing.address }}</span>
-        </div>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-10">
         <span>Destino: {{ item?.this_account?.id }} - {{ item?.this_account?.name }} - {{ item?.this_account?.account_routing?.address }}</span>
-        </div>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-10">
         <span>Motivo: {{ item?.details?.motive }}</span>
-        </div>
+      </div>
     </div>
     <div class="card" [hidden]="detail">
-      <pre style="font-size: 10px; color:blue">{{ item | json}}</pre>
+      <pre style="font-size: 10px; color: blue">{{ item | json }}</pre>
     </div>
   </div>
-  </div>
+</div>
 
+
+<style>
+
+
+
+
+.card {
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  background-color: #f26d1845;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 12px 12px 0 0;
+}
+
+.header .title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.header-label-top, .header-label-bottom {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.card-body {
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 0 0 12px 12px;
+}
+
+.card-body .description {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.card-body .text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.card-body .label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f26d1845;
+}
+
+.position-absolute {
+  top: 10px;
+  right: 10px;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.action-button:hover {
+  opacity: 0.7;
+}
+
+.action-button img {
+  width: 24px;
+  height: 24px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.card-footer .btn {
+  background-color: #f26d1845;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.card-footer .btn:hover {
+  background-color: #e74212;
+}
+
+
+
+</style>

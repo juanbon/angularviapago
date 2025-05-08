@@ -45,3 +45,16 @@
 
 
 
+
+  .filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+  
+  .filter-item {
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  

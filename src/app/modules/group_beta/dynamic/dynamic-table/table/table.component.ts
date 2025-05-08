@@ -114,7 +114,8 @@ export class TableComponent implements OnInit, OnDestroy {
   abstractService: AbstractService;
   snackBarService: SnackBarService;
 
-  filterData = [];
+  filterData: any[] = [];
+
 
   filterDataService!: FilterDataService;
   filterSubscribe$: Subscription = new Subscription();
@@ -135,26 +136,33 @@ export class TableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fields = this.show.fields.sort((a, b) => a.order - b.order);
-    if(typeof this.permiso === 'number' && this.permiso > 0){
+  
+    if (typeof this.permiso === 'number' && this.permiso > 0) {
       this.permiso = this.tokenStorageService.validatePe(this.permiso) ? 1 : 0;
-    }else{
+    } else {
       this.permiso = 1;
     }
-    this.initEmit = false;
+  
     this.headerTitle = this.title;
-    this.filterSubscribe$ = this.filterDataService.currentMessage.subscribe(
-      message => {
-        if (this.initEmit) {
-          this.totalPages = 0;
-          this.currentPage = 1;
-          this.filterData = message;
-          this.loadTable(message);
-        } else {
-          this.initEmit = true;
-        }
+    this.initEmit = false;
+  
+    this.filterSubscribe$ = this.filterDataService.currentMessage.subscribe(message => {
+      if (!this.initEmit) {
+        this.initEmit = true;
+        return; // 🔐 salta la primera emisión automática
       }
-    );
+  
+      this.totalPages = 0;
+      this.currentPage = 0;
+      this.filterData = message;
+      this.loadTable(message);
+    });
+  
+    this.filterData = this.filter || [];
+    this.loadTable(this.filterData); // solo una llamada real
   }
+  
+  
 
   ngOnDestroy() {
     this.filterSubscribe$.unsubscribe();
@@ -419,7 +427,7 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   first() {
-    this.currentPage = 1;
+    this.currentPage = 0;
     this.page = this.currentPage;
     this.loadTable(this.filterData);
   }
